@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 
-namespace ExploreFlicker.Helpers.Interfaces
+namespace ExploreFlicker.Helpers
 {
     public interface INavigationService
     {

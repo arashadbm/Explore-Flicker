@@ -1,5 +1,5 @@
 ﻿using Windows.Networking.Connectivity;
-using ExploreFlicker.Helpers.Interfaces;
+using ExploreFlicker.Helpers;
 
 namespace ExploreFlicker.Helpers
 {

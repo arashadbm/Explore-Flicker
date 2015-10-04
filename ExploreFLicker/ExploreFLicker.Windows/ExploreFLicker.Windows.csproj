@@ -108,6 +108,9 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ExploreFLicker.WindowsPhone\Strings\en-US\Resources.cs">
+      <Link>Strings\en-US\Resources.cs</Link>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -117,6 +120,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <PRIResource Include="..\ExploreFLicker.WindowsPhone\Strings\en-US\Resources.resw">
+      <Link>Strings\en-US\Resources.resw</Link>
+    </PRIResource>
     <None Include="ExploreFLicker.Windows_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace ExploreFlicker.Helpers.Interfaces
+﻿namespace ExploreFlicker.Helpers
 {
     public interface IToastService
     {

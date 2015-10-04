@@ -117,4 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ClientSideError" xml:space="preserve">
+    <value>Some error happened, please try again later.</value>
+  </data>
+  <data name="ErrorConnecting" xml:space="preserve">
+    <value>Error Happened while connecting, try again later.</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>There is no available data at the moment.</value>
+  </data>
+  <data name="NoInternet" xml:space="preserve">
+    <value>No Internet</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Sucess</value>
+  </data>
 </root>

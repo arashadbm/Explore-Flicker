@@ -2,7 +2,10 @@
 using Autofac;
 using Autofac.Features.OwnedInstances;
 using ExploreFlicker.Helpers;
-using ExploreFlicker.Helpers.Interfaces;
+using ExploreFlickr.Strings;
+using ExploreFLicker.DataServices;
+using FlickrExplorer.DataServices.Interfaces;
+using FlickrExplorer.DataServices.Requests;
 
 
 #pragma warning disable 4014
@@ -20,17 +23,29 @@ namespace ExploreFlicker.Viewmodels
         /// Register all required types in this static constructor,
         /// This will be executed the first time ViewModelLocator is accessed in code
         /// </summary>
-        static ViewModelLocator()
+        static ViewModelLocator ()
         {
             var builder = new ContainerBuilder();
 
             #region DataServices and Helpers
 
             builder.RegisterType<ViewModelLocator>().SingleInstance();
+            builder.RegisterType<Resources>().SingleInstance();
+
             builder.RegisterType<NetworkHelper>().SingleInstance();
             builder.Register<INetworkHelper>(c => c.Resolve<NetworkHelper>());
+
             builder.RegisterType<ToastService>().SingleInstance();
             builder.Register<IToastService>(c => c.Resolve<ToastService>());
+
+            //Registeration for Base request and message reslover
+            builder.RegisterType<BaseRequest>();
+
+            builder.RegisterType<RequestMessageResolver>();
+            builder.Register<IRequestMessageResolver>(c => c.Resolve<RequestMessageResolver>());
+
+            builder.RegisterType<IFlickrService>().SingleInstance();
+            builder.Register<IFlickrService>(c => c.Resolve<FlickrService>());
 
             //Register navigation Service
             builder.RegisterType<NavigationService>().SingleInstance().
@@ -53,7 +68,7 @@ namespace ExploreFlicker.Viewmodels
             Container = builder.Build();
         }
 
-        #region data Services and Helpers Properties
+        #region Data Services and Helpers Properties
 
 
         public IToastService ToastService
@@ -61,6 +76,11 @@ namespace ExploreFlicker.Viewmodels
             get { return Container.Resolve<IToastService>(); }
         }
 
+
+        public static Resources Resources
+        {
+            get { return Container.Resolve<Resources>(); }
+        }
         #endregion
 
         #region View Models Properties

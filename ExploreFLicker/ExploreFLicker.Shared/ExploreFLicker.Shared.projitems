@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Assets\GeometryPaths.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
@@ -27,26 +28,29 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleWhenFalseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleWhenNullConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleWhenTrueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\FlickrService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\IFlickrService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryArrayAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryIgnoreAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryParameterExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryPropertyAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\BaseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\IRequestMessageResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\RequestMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\RequestMessageResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\RequestResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\INavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\INetworkHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IToastService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NetworkHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ToastService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Response\GetRecentResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)Controls\" />
     <Folder Include="$(MSBuildThisFileDirectory)Collections\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </PRIResource>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Request\" />
   </ItemGroup>
 </Project>

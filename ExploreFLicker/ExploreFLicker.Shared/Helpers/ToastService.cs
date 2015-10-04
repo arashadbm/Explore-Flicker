@@ -2,7 +2,7 @@
 using System.Text;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
-using ExploreFlicker.Helpers.Interfaces;
+using ExploreFlicker.Helpers;
 
 namespace ExploreFlicker.Helpers
 {
