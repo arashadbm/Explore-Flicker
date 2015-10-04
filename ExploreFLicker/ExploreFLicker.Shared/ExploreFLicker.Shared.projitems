@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -15,5 +15,26 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryArrayAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryIgnoreAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryParameterExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryPropertyAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\INavigationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\INetworkHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IToastService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\NavigationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\NetworkHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ToastService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Common\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Controls\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Collections\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Converters\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
   </ItemGroup>
 </Project>

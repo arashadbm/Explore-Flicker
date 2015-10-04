@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExploreFLicker", "ExploreFLicker", "{A46C7D9A-F192-4D3F-9523-A91165089F92}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.txt = ReadMe.txt
+	EndProjectSection
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ExploreFLicker.Shared", "ExploreFLicker\ExploreFLicker.Shared\ExploreFLicker.Shared.shproj", "{6BF40938-915A-4B5E-BFC9-B06FAEBE99DC}"
 EndProject
