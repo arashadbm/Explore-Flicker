@@ -15,6 +15,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanNegateConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ItemClickedConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleNotEmptyConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleWhenEmptyConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleWhenFalseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleWhenNullConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleWhenTrueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryArrayAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryIgnoreAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\QueryParameters\QueryParameterExtensions.cs" />
@@ -25,16 +37,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NetworkHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ToastService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Common\" />
     <Folder Include="$(MSBuildThisFileDirectory)Controls\" />
     <Folder Include="$(MSBuildThisFileDirectory)Collections\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Converters\" />
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </PRIResource>
   </ItemGroup>
 </Project>
