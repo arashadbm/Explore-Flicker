@@ -5,6 +5,7 @@ using ExploreFlicker.Helpers;
 using ExploreFlickr.Strings;
 using ExploreFlicker.DataServices;
 using ExploreFlicker.ViewModels;
+using ExploreFLicker.ViewModels;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
 
@@ -65,6 +66,8 @@ namespace ExploreFlicker.Viewmodels
             #region ViewModels registeration
 
             builder.RegisterType<MainViewModel>();
+            builder.RegisterType<GalleryViewModel>();
+            builder.RegisterType<MapViewModel>();
             #endregion
 
             Container = builder.Build();
@@ -90,13 +93,22 @@ namespace ExploreFlicker.Viewmodels
             get { return Container.Resolve<MainViewModel>(); }
         }
 
+        public GalleryViewModel GalleryViewModel
+        {
+            get { return Container.Resolve<GalleryViewModel>(); }
+        }
+
+        public MapViewModel MapViewModel
+        {
+            get { return Container.Resolve<MapViewModel>(); }
+        }
+
         #endregion
 
         /// <summary>
         ///Create instance in App.xaml resources so you can use it in data binding in all xaml pages
         ///And don't forget to set this instance from App.xaml.cs, So you can access it from code behind in pages(if required)
         /// </summary>
-
         public static ViewModelLocator Locator { set; get; }
 
     }

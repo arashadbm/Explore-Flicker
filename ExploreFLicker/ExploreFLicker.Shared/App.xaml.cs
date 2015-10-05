@@ -15,10 +15,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using ExploreFlicker.Common;
+using ExploreFlicker.Models.Response;
 using ExploreFlicker.Viewmodels;
 using ExploreFlicker.Views;
-
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
 namespace ExploreFlicker
 {
@@ -47,7 +47,7 @@ namespace ExploreFlicker
         /// search results, and so forth.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             //Set the static ViewModelLocator.Locator with locator instance defined inside app.xaml.
             //So If code behind or classes used ViewModelLocator.Locato directly, 
@@ -69,12 +69,27 @@ namespace ExploreFlicker
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                // TODO: change this value to a cache size that is appropriate for your application
-                rootFrame.CacheSize = 1;
+                //Add types passed inside navigation parameters here
+                SuspensionManager.KnownTypes.Add(typeof(Photo));
+                SuspensionManager.KnownTypes.Add(typeof(Description));
+
+                //Associate the frame with a SuspensionManager key                                
+                SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
+
+                rootFrame.CacheSize = 3;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    // TODO: Load state from previously suspended application
+                    // Restore the saved session state only when appropriate
+                    try
+                    {
+                        await SuspensionManager.RestoreAsync();
+                    }
+                    catch (SuspensionManagerException)
+                    {
+                        // Something went wrong restoring state.
+                        // Assume there is no state and continue
+                    }
                 }
 
                 // Place the frame in the current Window
@@ -132,11 +147,17 @@ namespace ExploreFlicker
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+            try
+            {
+                await SuspensionManager.SaveAsync();
+            }
+            catch (Exception)
+            {
+            }
 
-            // TODO: Save application state and stop any background activity
             deferral.Complete();
         }
     }

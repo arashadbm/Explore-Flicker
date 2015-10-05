@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExploreFlicker.Common;
@@ -8,7 +9,10 @@ using ExploreFlicker.DataServices;
 using ExploreFlicker.Helpers;
 using ExploreFlicker.Models.Request;
 using ExploreFlicker.Models.Response;
+using ExploreFlicker.Views;
 using ExploreFlickr.Strings;
+using ExploreFLicker.Models;
+using ExploreFLicker.ViewModels;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
 
@@ -17,7 +21,7 @@ namespace ExploreFlicker.ViewModels
     public class MainViewModel : BindableBase
     {
         #region Fields
-        private const int PerPage = 20;
+        private const int PerPage = 40;
         private readonly IFlickrService _flickrService;
         private readonly INavigationService _navigationService;
         private readonly IRequestMessageResolver _messageResolver;
@@ -179,7 +183,13 @@ namespace ExploreFlicker.ViewModels
 
         private void PhotoClicked(Photo photo)
         {
-
+            if (photo == null) return;
+            var galleryParameters = new GalleryNavigationParameters()
+            {
+                SelectedPhoto = photo,
+                Photos = PhotosCollection.ToList()
+            };
+            _navigationService.NavigateByPage<GalleryView>(galleryParameters);
         }
 
         #endregion

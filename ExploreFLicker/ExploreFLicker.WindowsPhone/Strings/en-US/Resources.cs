@@ -18,7 +18,7 @@
 // 	This code contains a helper class exposing property representations
 // 	of the string resources defined in the specified .ResW file
 // 
-// 	Generated: 10/05/2015 22:14:05
+// 	Generated: 10/06/2015 01:26:11
 // </auto-generatedInfo>
 // --------------------------------------------------------------------------------------------------
 namespace ExploreFlickr.Strings

@@ -58,10 +58,10 @@ namespace ExploreFlicker.Models.Response
         public int Isfamily { get; set; }
 
         [JsonProperty("latitude")]
-        public float Latitude { get; set; }
+        public double Latitude { get; set; }
 
         [JsonProperty("longitude")]
-        public object Longitude { get; set; }
+        public double Longitude { get; set; }
 
         [JsonProperty("accuracy")]
         public int Accuracy { get; set; }

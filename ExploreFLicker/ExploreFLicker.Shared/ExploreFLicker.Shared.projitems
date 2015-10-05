@@ -49,10 +49,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NetworkHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ToastService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryNavigationParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Request\FlickerParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Request\GetRecentPhotosParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Response\RecentPhotosResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GalleryViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MapViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
