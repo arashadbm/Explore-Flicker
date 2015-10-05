@@ -3,8 +3,8 @@ using Autofac;
 using Autofac.Features.OwnedInstances;
 using ExploreFlicker.Helpers;
 using ExploreFlickr.Strings;
-using ExploreFLicker.DataServices;
-using ExploreFLicker.ViewModels;
+using ExploreFlicker.DataServices;
+using ExploreFlicker.ViewModels;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
 

@@ -1,5 +1,5 @@
 ﻿using ExploreFlicker.Viewmodels;
-using ExploreFLicker.Assets;
+using ExploreFlicker.Assets;
 
 namespace FlickrExplorer.DataServices.Requests
 {

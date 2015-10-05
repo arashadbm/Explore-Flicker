@@ -1,5 +1,5 @@
 ﻿using ExploreFlickr.Strings;
-using ExploreFLicker.Assets;
+using ExploreFlicker.Assets;
 using FlickrExplorer.DataServices.Interfaces;
 
 namespace FlickrExplorer.DataServices.Requests

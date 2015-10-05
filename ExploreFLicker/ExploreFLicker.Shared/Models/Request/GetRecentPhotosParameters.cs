@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ExploreFLicker.DataServices.QueryParameters;
+using ExploreFlicker.DataServices.QueryParameters;
 
-namespace ExploreFLicker.Models.Request
+namespace ExploreFlicker.Models.Request
 {
     public class GetRecentPhotosParameters : FlickerParameters
     {

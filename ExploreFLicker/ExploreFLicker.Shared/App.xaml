@@ -1,10 +1,13 @@
 ﻿<Application
-    x:Class="ExploreFLicker.App"
+    x:Class="ExploreFlicker.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExploreFLicker"
-    xmlns:viewmodels="using:ExploreFlicker.Viewmodels">
+    xmlns:local="using:ExploreFlicker"
+    xmlns:viewmodels="using:ExploreFlicker.Viewmodels"
+    xmlns:converters="using:ExploreFlicker.Converters">
     <Application.Resources>
         <viewmodels:ViewModelLocator x:Key="Locator"/>
+        <converters:ItemClickedConverter x:Key="ItemClickedConverter"/>
+        <converters:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
     </Application.Resources>
 </Application>

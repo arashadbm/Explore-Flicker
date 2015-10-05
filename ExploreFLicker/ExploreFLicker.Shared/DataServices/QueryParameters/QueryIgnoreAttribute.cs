@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExploreFLicker.DataServices.QueryParameters
+namespace ExploreFlicker.DataServices.QueryParameters
 {
     [AttributeUsage(AttributeTargets.Property)]
     internal sealed class QueryIgnoreAttribute : Attribute

@@ -2,9 +2,9 @@
 using Windows.UI.Xaml.Navigation;
 using ExploreFlicker.Common;
 using ExploreFlicker.Controls;
-using ExploreFLicker.ViewModels;
+using ExploreFlicker.ViewModels;
 
-namespace ExploreFLicker.Views
+namespace ExploreFlicker.Views
 {
 
     public sealed partial class MainPage : ExtendedPage
@@ -24,6 +24,22 @@ namespace ExploreFLicker.Views
             {
                 _mainViewModel.LoadInitialPhotosCommand.Execute(null);
             }
+        }
+
+        private async void PhotosCollections_OnLoadMoreRequested(object sender, VerticalGridView.LoadMoreEventArgs e)
+        {
+            await _mainViewModel.LoadMorePhotosAsync();
+            e.IsLoadingMore = false;
+        }
+
+        private void WrapGrid_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        {
+            if (!(e.NewSize.Width > 0) || !(e.NewSize.Width > e.PreviousSize.Width)) return;
+            VariableSizedWrapGrid itemsWrapGrid = sender as VariableSizedWrapGrid;
+            if (itemsWrapGrid == null) return;
+            var width = (e.NewSize.Width);
+            itemsWrapGrid.ItemWidth = width / 2;
+            itemsWrapGrid.ItemHeight = itemsWrapGrid.ItemWidth;
         }
     }
 }

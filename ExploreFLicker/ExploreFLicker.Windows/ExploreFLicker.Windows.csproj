@@ -7,7 +7,7 @@
     <ProjectGuid>{9207CAE9-6D54-4FEB-A0D3-E32A7283B85B}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExploreFLicker</RootNamespace>
+    <RootNamespace>ExploreFlicker</RootNamespace>
     <AssemblyName>ExploreFLicker.Windows</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>

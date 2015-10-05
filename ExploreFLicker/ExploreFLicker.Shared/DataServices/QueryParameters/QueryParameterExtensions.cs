@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 
-namespace ExploreFLicker.DataServices.QueryParameters
+namespace ExploreFlicker.DataServices.QueryParameters
 {
 
     //Developed by Ahmed Rashad

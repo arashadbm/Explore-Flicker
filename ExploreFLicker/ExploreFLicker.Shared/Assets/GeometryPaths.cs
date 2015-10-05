@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExploreFLicker.Assets
+namespace ExploreFlicker.Assets
 {
     public class GeometryPaths
     {

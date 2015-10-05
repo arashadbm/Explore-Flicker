@@ -2,7 +2,7 @@
 using ExploreFlicker.Controls;
 
 
-namespace ExploreFLicker.Views
+namespace ExploreFlicker.Views
 {
 
     public sealed partial class MainPage : ExtendedPage

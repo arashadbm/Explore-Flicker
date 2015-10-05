@@ -4,15 +4,15 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using ExploreFlicker.Common;
+using ExploreFlicker.DataServices;
 using ExploreFlicker.Helpers;
+using ExploreFlicker.Models.Request;
+using ExploreFlicker.Models.Response;
 using ExploreFlickr.Strings;
-using ExploreFLicker.DataServices;
-using ExploreFLicker.Models.Request;
-using ExploreFLicker.Models.Response;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
 
-namespace ExploreFLicker.ViewModels
+namespace ExploreFlicker.ViewModels
 {
     public class MainViewModel : BindableBase
     {
@@ -22,7 +22,7 @@ namespace ExploreFLicker.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IRequestMessageResolver _messageResolver;
         private readonly Resources _resources;
-       
+
         #endregion
 
         #region Properties
@@ -107,19 +107,15 @@ namespace ExploreFLicker.ViewModels
             BusyMessage = _resources.Loading;
             try
             {
-                var data = await LoadPhotosAsync(1, PerPage);
-                if (data.ResponseStatus == ResponseStatus.SuccessWithResult && data.Result.Photos != null)
+                var response = await LoadPhotosAsync(1, PerPage);
+                if (response.ResponseStatus == ResponseStatus.SuccessWithResult && response.Result.Photos != null)
                 {
-                    var list = data.Result.Photos.List;
-                    PhotosCollection.Clear();
-                    foreach (var photo in list)
-                    {
-                        PhotosCollection.Add(photo);
-                    }
+                    var list = response.Result.Photos.List;
+                    UpdateCollection(response);
                 }
                 else
                 {
-                    ErrorMessage = _messageResolver.ResultToMessage(data);
+                    ErrorMessage = _messageResolver.ResultToMessage(response);
                 }
             }
             catch (Exception)
@@ -135,21 +131,16 @@ namespace ExploreFLicker.ViewModels
 
         }
 
-        private async Task LoadMorePhotosAsync()
+        public async Task LoadMorePhotosAsync()
         {
             if (IsBusy) return;
             try
             {
                 LoadInitialPhotosCommand.CanExecute = false;
-                var response = await LoadPhotosAsync(1, PerPage);
+                var response = await LoadPhotosAsync(CurrentPage + 1, PerPage);
                 if (response.ResponseStatus == ResponseStatus.SuccessWithResult)
                 {
-                    var list = response.Result.Photos.List;
-                    PhotosCollection.Clear();
-                    foreach (var photo in list)
-                    {
-                        PhotosCollection.Add(photo);
-                    }
+                    UpdateCollection(response);
                 }
             }
             catch (Exception)
@@ -159,6 +150,17 @@ namespace ExploreFLicker.ViewModels
             finally
             {
                 LoadInitialPhotosCommand.CanExecute = true;
+            }
+        }
+
+        private void UpdateCollection(ResponseWrapper<RecentPhotosResponse> response)
+        {
+            CurrentPage = response.Result.Photos.Page;
+            MaxPage = response.Result.Photos.Pages;
+            var list = response.Result.Photos.List;
+            foreach (var photo in list)
+            {
+                PhotosCollection.Add(photo);
             }
         }
 

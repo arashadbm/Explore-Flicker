@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-namespace ExploreFLicker.DataServices.QueryParameters
+namespace ExploreFlicker.DataServices.QueryParameters
 {
 
     [AttributeUsage(AttributeTargets.Property)]

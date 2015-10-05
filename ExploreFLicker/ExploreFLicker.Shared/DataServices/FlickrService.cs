@@ -5,12 +5,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ExploreFLicker.DataServices.QueryParameters;
-using ExploreFLicker.Models.Request;
-using ExploreFLicker.Models.Response;
+using ExploreFlicker.Models.Request;
+using ExploreFlicker.Models.Response;
+using ExploreFlicker.DataServices.QueryParameters;
 using FlickrExplorer.DataServices.Requests;
 
-namespace ExploreFLicker.DataServices
+namespace ExploreFlicker.DataServices
 {
     public class FlickrService : IFlickrService
     {
