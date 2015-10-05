@@ -7,12 +7,12 @@ namespace ExploreFLicker.DataServices.QueryParameters
     [AttributeUsage(AttributeTargets.Property)]
     internal sealed class QueryArrayAttribute : Attribute
     {
-        public QueryArrayAttribute ( [CallerLineNumber]int order = 0 )
+        public QueryArrayAttribute([CallerLineNumber]int order = 0)
         {
             _order = order;
         }
 
-        public QueryArrayAttribute ( String name, [CallerLineNumber]int order = 0 )
+        public QueryArrayAttribute(String name, [CallerLineNumber]int order = 0)
         {
             Name = name;
             _order = order;
@@ -53,6 +53,11 @@ namespace ExploreFLicker.DataServices.QueryParameters
         /// For example Filter[CategoryIds] as key, we need [] to not be escaped
         /// </summary>
         public bool DontEscapeKey { get; set; }
+
+        /// <summary>
+        /// If True comma will be escaped to %2C
+        /// </summary>
+        public bool EscapeComma { get; set; }
 
         public int Order
         {

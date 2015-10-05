@@ -9,6 +9,6 @@ namespace FlickrExplorer.DataServices.Interfaces
 {
     public interface IRequestMessageResolver
     {
-        RequestMessage ResultToMessage ( RequestResponse response );
+        RequestMessage ResultToMessage (ResponseWrapper response );
     }
 }

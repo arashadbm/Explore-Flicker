@@ -18,7 +18,7 @@
 // 	This code contains a helper class exposing property representations
 // 	of the string resources defined in the specified .ResW file
 // 
-// 	Generated: 10/05/2015 00:24:03
+// 	Generated: 10/05/2015 18:12:51
 // </auto-generatedInfo>
 // --------------------------------------------------------------------------------------------------
 namespace ExploreFlickr.Strings
@@ -72,6 +72,17 @@ namespace ExploreFlickr.Strings
             get
             {
                 return resourceLoader.GetString("ErrorConnecting");
+            }
+        }
+        
+        /// <summary>
+        /// Localized resource similar to "Loading"
+        /// </summary>
+        public virtual string Loading
+        {
+            get
+            {
+                return resourceLoader.GetString("Loading");
             }
         }
         

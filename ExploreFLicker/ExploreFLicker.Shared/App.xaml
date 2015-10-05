@@ -2,6 +2,9 @@
     x:Class="ExploreFLicker.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExploreFLicker">
-
+    xmlns:local="using:ExploreFLicker"
+    xmlns:viewmodels="using:ExploreFlicker.Viewmodels">
+    <Application.Resources>
+        <viewmodels:ViewModelLocator x:Key="Locator"/>
+    </Application.Resources>
 </Application>

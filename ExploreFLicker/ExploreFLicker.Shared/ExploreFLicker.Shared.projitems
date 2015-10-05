@@ -16,10 +16,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Assets\GeometryPaths.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncExtendedCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\BindableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ExtendedCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanNegateConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ItemClickedConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
@@ -38,19 +42,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\IRequestMessageResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\RequestMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\RequestMessageResolver.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\RequestResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataServices\Requests\ResponseWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\INavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\INetworkHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IToastService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NetworkHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ToastService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Response\GetRecentResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Request\FlickerParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Request\GetRecentPhotosParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Response\RecentPhotosResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Controls\" />
     <Folder Include="$(MSBuildThisFileDirectory)Collections\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Models\Request\" />
   </ItemGroup>
 </Project>

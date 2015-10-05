@@ -2,7 +2,7 @@
 
 namespace FlickrExplorer.DataServices.Requests
 {
-    public class RequestResponse
+    public class ResponseWrapper
     {
         public ResponseStatus ResponseStatus { get; set; }
         /// <summary>
@@ -12,7 +12,7 @@ namespace FlickrExplorer.DataServices.Requests
         // public HttpStatusCode? StatusCode { get; set; }
     }
 
-    public class RequestResponse<T> : RequestResponse
+    public class ResponseWrapper<T> : ResponseWrapper
     {
         public T Result { get; set; }
     }

@@ -4,6 +4,7 @@ using Autofac.Features.OwnedInstances;
 using ExploreFlicker.Helpers;
 using ExploreFlickr.Strings;
 using ExploreFLicker.DataServices;
+using ExploreFLicker.ViewModels;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
 
@@ -23,7 +24,7 @@ namespace ExploreFlicker.Viewmodels
         /// Register all required types in this static constructor,
         /// This will be executed the first time ViewModelLocator is accessed in code
         /// </summary>
-        static ViewModelLocator ()
+        static ViewModelLocator()
         {
             var builder = new ContainerBuilder();
 
@@ -44,7 +45,7 @@ namespace ExploreFlicker.Viewmodels
             builder.RegisterType<RequestMessageResolver>();
             builder.Register<IRequestMessageResolver>(c => c.Resolve<RequestMessageResolver>());
 
-            builder.RegisterType<IFlickrService>().SingleInstance();
+            builder.RegisterType<FlickrService>().SingleInstance();
             builder.Register<IFlickrService>(c => c.Resolve<FlickrService>());
 
             //Register navigation Service
@@ -63,6 +64,7 @@ namespace ExploreFlicker.Viewmodels
 
             #region ViewModels registeration
 
+            builder.RegisterType<MainViewModel>();
             #endregion
 
             Container = builder.Build();
@@ -70,12 +72,10 @@ namespace ExploreFlicker.Viewmodels
 
         #region Data Services and Helpers Properties
 
-
         public IToastService ToastService
         {
             get { return Container.Resolve<IToastService>(); }
         }
-
 
         public static Resources Resources
         {
@@ -85,7 +85,10 @@ namespace ExploreFlicker.Viewmodels
 
         #region View Models Properties
 
-
+        public MainViewModel MainViewModel
+        {
+            get { return Container.Resolve<MainViewModel>(); }
+        }
 
         #endregion
 
@@ -93,6 +96,7 @@ namespace ExploreFlicker.Viewmodels
         ///Create instance in App.xaml resources so you can use it in data binding in all xaml pages
         ///And don't forget to set this instance from App.xaml.cs, So you can access it from code behind in pages(if required)
         /// </summary>
+
         public static ViewModelLocator Locator { set; get; }
 
     }

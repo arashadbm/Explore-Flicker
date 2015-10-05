@@ -48,10 +48,10 @@ namespace FlickrExplorer.DataServices.Requests
             NoCahce = true;
         }
 
-        public async Task<RequestResponse<TR>> PostAsync<TR> ( StringContent content, CancellationToken? token = null )
+        public async Task<ResponseWrapper<TR>> PostAsync<TR> ( StringContent content, CancellationToken? token = null )
         {
 
-            var response = new RequestResponse<TR>();
+            var response = new ResponseWrapper<TR>();
             HttpClient httpClient = null;
             try
             {
@@ -87,7 +87,7 @@ namespace FlickrExplorer.DataServices.Requests
                 ParseResult(stringValue, response);//parse Result even when there is error
                 if(!postResponse.IsSuccessStatusCode)
                 {
-                    response.ResponseStatus = ResponseStatus.HttpError;//Override response status value to be HttpError
+                    response.ResponseStatus = ResponseStatus.HttpError;//Override responseWrapper status value to be HttpError
                 }
                 return response;
             }
@@ -118,9 +118,9 @@ namespace FlickrExplorer.DataServices.Requests
             return response;
         }
 
-        public async Task<RequestResponse<TR>> GetAsync<TR> ( CancellationToken? token = null )
+        public async Task<ResponseWrapper<TR>> GetAsync<TR> ( CancellationToken? token = null )
         {
-            var response = new RequestResponse<TR>();
+            var response = new ResponseWrapper<TR>();
             HttpClient httpClient = null;
             try
             {
@@ -152,7 +152,7 @@ namespace FlickrExplorer.DataServices.Requests
                 ParseResult(stringValue, response);//parse Result even when there is error
                 if(!getResponse.IsSuccessStatusCode)
                 {
-                    response.ResponseStatus = ResponseStatus.HttpError;//Override response status value to be HttpError
+                    response.ResponseStatus = ResponseStatus.HttpError;//Override responseWrapper status value to be HttpError
                 }
 
                 return response;
@@ -183,11 +183,11 @@ namespace FlickrExplorer.DataServices.Requests
             return response;
         }
 
-        private void ParseResult<TR> ( string stringValue, RequestResponse<TR> response )
+        private void ParseResult<TR> ( string stringValue, ResponseWrapper<TR> responseWrapper )
         {
             if(String.IsNullOrWhiteSpace(stringValue))
             {
-                response.ResponseStatus = ResponseStatus.SuccessWithNoData;
+                responseWrapper.ResponseStatus = ResponseStatus.SuccessWithNoData;
                 return;
             }
             if(ResultContentType == ContentType.Json)
@@ -195,12 +195,12 @@ namespace FlickrExplorer.DataServices.Requests
                 try
                 {
                     var result = JsonConvert.DeserializeObject<TR>(stringValue);
-                    response.Result = result;
-                    response.ResponseStatus = ResponseStatus.SuccessWithResult;
+                    responseWrapper.Result = result;
+                    responseWrapper.ResponseStatus = ResponseStatus.SuccessWithResult;
                 }
                 catch(Exception)
                 {
-                    response.ResponseStatus = ResponseStatus.ParserException;
+                    responseWrapper.ResponseStatus = ResponseStatus.ParserException;
                     return;
                 }
             }
@@ -208,18 +208,18 @@ namespace FlickrExplorer.DataServices.Requests
             {
                 try
                 {
-                    response.Result = (TR)Convert.ChangeType(stringValue, typeof(TR));
+                    responseWrapper.Result = (TR)Convert.ChangeType(stringValue, typeof(TR));
                 }
                 catch(Exception)
                 {
-                    response.ResponseStatus = ResponseStatus.ParserException;
+                    responseWrapper.ResponseStatus = ResponseStatus.ParserException;
                     return;
                 }
             }
 
-            if(response.Result.Equals(default(TR))) response.ResponseStatus = ResponseStatus.SuccessWithNoData;
+            if(responseWrapper.Result.Equals(default(TR))) responseWrapper.ResponseStatus = ResponseStatus.SuccessWithNoData;
             //Check if the result is of type Ilist, and the count ==0, if true assign ResponseStatus to no Data
-            else if(response.Result is IList && (response.Result as IList).Count == 0) response.ResponseStatus = ResponseStatus.SuccessWithNoData;
+            else if(responseWrapper.Result is IList && (responseWrapper.Result as IList).Count == 0) responseWrapper.ResponseStatus = ResponseStatus.SuccessWithNoData;
         }
     }
 

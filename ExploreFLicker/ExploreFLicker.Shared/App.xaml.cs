@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using ExploreFlicker.Viewmodels;
+using ExploreFLicker.Views;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -47,6 +49,10 @@ namespace ExploreFLicker
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            //Set the static ViewModelLocator.Locator with locator instance defined inside app.xaml.
+            //So If code behind or classes used ViewModelLocator.Locato directly, 
+            //they all will be using the same instance.
+            ViewModelLocator.Locator = (ViewModelLocator)Current.Resources["Locator"];
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -95,7 +101,7 @@ namespace ExploreFLicker
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                if (!rootFrame.Navigate(typeof(Views.MainPage), e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

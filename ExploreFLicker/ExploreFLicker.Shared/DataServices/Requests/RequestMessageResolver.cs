@@ -13,7 +13,7 @@ namespace FlickrExplorer.DataServices.Requests
             _resources = resources;
         }
 
-        public RequestMessage ResultToMessage ( RequestResponse response )
+        public RequestMessage ResultToMessage (ResponseWrapper response )
         {
 
             switch(response.ResponseStatus)
