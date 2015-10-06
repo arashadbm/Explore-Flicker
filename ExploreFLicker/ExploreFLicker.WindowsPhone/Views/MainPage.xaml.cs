@@ -17,6 +17,12 @@ namespace ExploreFlicker.Views
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ResetPageCache();
+        }
+
         protected override void LoadState(object sender, LoadStateEventArgs e)
         {
             base.LoadState(sender, e);
@@ -40,6 +46,13 @@ namespace ExploreFlicker.Views
             var width = (e.NewSize.Width);
             itemsWrapGrid.ItemWidth = width / 2;
             itemsWrapGrid.ItemHeight = itemsWrapGrid.ItemWidth;
+        }
+
+        private void ResetPageCache()
+        {
+            var cacheSize = Frame.CacheSize;
+            Frame.CacheSize = 0;
+            Frame.CacheSize = cacheSize;
         }
     }
 }

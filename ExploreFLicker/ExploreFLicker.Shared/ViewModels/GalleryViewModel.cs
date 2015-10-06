@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
 using ExploreFlicker.Common;
 using ExploreFlicker.DataServices;
 using ExploreFlicker.Helpers;
 using ExploreFlicker.Models.Request;
 using ExploreFlicker.Models.Response;
+using ExploreFlicker.Views;
 using ExploreFlickr.Strings;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
@@ -78,7 +80,9 @@ namespace ExploreFLicker.ViewModels
         #region Methods
         private void ShowMap(Photo photo)
         {
+            if (photo == null) return;
             //Navigation to Map
+            _navigationService.NavigateByPage<MapView>(photo);
         }
 
         #endregion

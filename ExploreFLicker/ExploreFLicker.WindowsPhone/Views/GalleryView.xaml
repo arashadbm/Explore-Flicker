@@ -25,7 +25,7 @@
                     <TextBlock FontSize="{StaticResource TextStyleExtraLargeFontSize}"
                                Margin="0,0,0,22"
                                Text="{Binding Title}"
-                               TextWrapping="NoWrap" MaxWidth="150" TextTrimming="None"/>
+                               TextWrapping="NoWrap" MaxWidth="150" MinWidth="40" TextTrimming="None"/>
                 </DataTemplate>
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
