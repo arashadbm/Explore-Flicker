@@ -41,8 +41,10 @@ namespace ExploreFlicker.Views
                 //Clear previous values if any as this page is cached.
                 _galleryViewModel.Photos = null;
                 _galleryViewModel.SelectedPhoto = null;
+
                 var parameters = e.NavigationParameter as GalleryNavigationParameters;
                 if (parameters == null) return;
+                //Set photos gallery and selected photo.
                 _galleryViewModel.Photos = parameters.Photos;
                 _galleryViewModel.SelectedPhoto = parameters.SelectedPhoto;
 

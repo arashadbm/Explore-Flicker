@@ -9,5 +9,21 @@
         <viewmodels:ViewModelLocator x:Key="Locator"/>
         <converters:ItemClickedConverter x:Key="ItemClickedConverter"/>
         <converters:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
+
+        <!--Square Image Thumbnail Template-->
+        <DataTemplate x:Key="ThumbnailTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0"  Source="{Binding ThumbnailPath}"/>
+                <TextBlock Grid.Row="1" Text="{Binding Title}" 
+                                   MaxLines="1" TextWrapping="NoWrap"
+                                   Margin="8" TextAlignment="Center" 
+                                   VerticalAlignment="Bottom"
+                                   FontSize="{StaticResource TextStyleMediumFontSize}"/>
+            </Grid>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -17,20 +17,7 @@
         </CommandBar>
     </controls:ExtendedPage.BottomAppBar>
     <controls:ExtendedPage.Resources>
-        <DataTemplate x:Key="ItemTemplate">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Image Grid.Row="0"  Source="{Binding ThumbnailPath}"/>
-                <TextBlock Grid.Row="1" Text="{Binding Title}" 
-                                   MaxLines="1" TextWrapping="NoWrap"
-                                   Margin="8" TextAlignment="Center" 
-                                   VerticalAlignment="Bottom"
-                                   FontSize="{StaticResource TextStyleMediumFontSize}"/>
-            </Grid>
-        </DataTemplate>
+       
 
         <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
             <VariableSizedWrapGrid SizeChanged="WrapGrid_SizeChanged"  Orientation="Horizontal" MaximumRowsOrColumns="2" />
@@ -123,7 +110,7 @@
                 IsLoadingMoreEnabled="True"
                 LoadMoreRequested="PhotosCollections_OnLoadMoreRequested"
 				ItemsSource="{Binding PhotosCollection}"
-                ItemTemplate="{StaticResource ItemTemplate}"
+                ItemTemplate="{StaticResource ThumbnailTemplate}"
                 EmptyContent="{Binding ErrorMessage}"
                 ItemsPanel="{StaticResource GalleryItemsPanelTemplate}"
 				SelectionMode="None" ItemContainerStyle="{StaticResource ItemContainerStyle}"
@@ -175,7 +162,7 @@
                 IsLoadingMoreEnabled="True"
                 LoadMoreRequested="SearchCollections_OnLoadMoreRequested"
 				ItemsSource="{Binding SearchCollection}"
-                ItemTemplate="{StaticResource ItemTemplate}"
+                ItemTemplate="{StaticResource ThumbnailTemplate}"
                 ItemsPanel="{StaticResource GalleryItemsPanelTemplate}"
                 EmptyContent="{Binding ErrorMessage}"
 				SelectionMode="None" ItemContainerStyle="{StaticResource ItemContainerStyle}"

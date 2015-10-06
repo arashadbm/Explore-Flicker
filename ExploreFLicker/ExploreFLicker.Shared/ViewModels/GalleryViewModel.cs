@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Devices.Geolocation;
 using ExploreFlicker.Common;
-using ExploreFlicker.DataServices;
 using ExploreFlicker.Helpers;
-using ExploreFlicker.Models.Request;
 using ExploreFlicker.Models.Response;
 using ExploreFlicker.Views;
-using ExploreFlickr.Strings;
-using FlickrExplorer.DataServices.Interfaces;
-using FlickrExplorer.DataServices.Requests;
 
 namespace ExploreFlicker.ViewModels
 {
@@ -27,6 +18,9 @@ namespace ExploreFlicker.ViewModels
 
         #region Properties
         private List<Photo> _photos;
+        /// <summary>
+        /// List of photos from the source of Selected photos, which were passed from previous page.
+        /// </summary>
         public List<Photo> Photos
         {
             get { return _photos; }
@@ -34,6 +28,9 @@ namespace ExploreFlicker.ViewModels
         }
 
         private Photo _selectedPhoto;
+        /// <summary>
+        /// Used to keep track of selected photo in view.
+        /// </summary>
         public Photo SelectedPhoto
         {
             get { return _selectedPhoto; }
@@ -53,12 +50,14 @@ namespace ExploreFlicker.ViewModels
         }
 
         private bool _isMapAvailable;
+        /// <summary>
+        /// True value means there is available longtiude and latitude for this photo.
+        /// </summary>
         public bool IsMapAvailable
         {
             get { return _isMapAvailable; }
             set { SetProperty(ref _isMapAvailable, value); }
         }
-
 
         #endregion
 
@@ -74,6 +73,10 @@ namespace ExploreFlicker.ViewModels
         #endregion
 
         #region Commands
+
+        /// <summary>
+        /// Command for showing map for the selected photo, if possible.
+        /// </summary>
         public ExtendedCommand<Photo> ShowMapCommand { get; set; }
         #endregion
 

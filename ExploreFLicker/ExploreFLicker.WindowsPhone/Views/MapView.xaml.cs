@@ -32,6 +32,8 @@ namespace ExploreFlicker.Views
             var photo = e.NavigationParameter as Photo;
             if (photo == null) return;
             _mapViewModel.Photo = photo;
+
+            //Zoom the map to the specified location with Bow animation and zoom level 14.
             await Map.TrySetViewAsync(_mapViewModel.Geopoint, 14, null, null, MapAnimationKind.Bow);
         }
 
@@ -39,9 +41,9 @@ namespace ExploreFlicker.Views
         /// <summary>
         /// There is memory leak inside Winrt version of Map Control, It won't be garabage collected.
         /// Few Visits to the map page will crash the app. 
-        /// Making cache required will waste memory for non core function page like this.
+        /// Setting Navigation cache to required will waste memory for non core function page like this.
         /// As a workaround, we will remove manually children of map and then remove map from its parent.
-        /// If you made memory analysis , you will find memory drops and map is released.
+        /// If you make memory analysis , you will find memory drops.
         /// </summary>
         /// <param name="e"></param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -51,11 +53,7 @@ namespace ExploreFlicker.Views
             {
                 try
                 {
-                    foreach (var child in Map.Children)
-                    {
-                        DeepRemove(Map.Children, (UIElement)child);
-                    }
-                    //Map.Children.Clear();
+                    Map.Children.Clear();
 
                     //Remove map from parent control.
                     Grid parentGrid = VisualTreeHelper.GetParent(Map) as Grid;
@@ -75,17 +73,6 @@ namespace ExploreFlicker.Views
             }
         }
 
-        public static void DeepRemove(IList<DependencyObject> uiElementLayer, UIElement uiElement)
-        {
-            ContentPresenter contentPresenter = VisualTreeHelper.GetParent(uiElement) as ContentPresenter;
-            if (contentPresenter != null)
-            {
-                contentPresenter.Content = null;
-                Canvas canvas = VisualTreeHelper.GetParent(contentPresenter) as Canvas;
-                if (canvas != null) canvas.Children.Remove(contentPresenter);
-            }
-            uiElementLayer.Remove(uiElement);
-        }
         #endregion
 
     }

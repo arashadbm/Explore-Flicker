@@ -12,7 +12,6 @@ using ExploreFlicker.Models.Response;
 using ExploreFlicker.Views;
 using ExploreFlickr.Strings;
 using ExploreFlicker.Models;
-using ExploreFlicker.ViewModels;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
 
@@ -81,8 +80,15 @@ namespace ExploreFlicker.ViewModels
         #endregion
 
         #region Commands
-
+        /// <summary>
+        /// Command for loading first page of photos.
+        /// </summary>
         public AsyncExtendedCommand LoadInitialPhotosCommand { get; set; }
+
+        /// <summary>
+        /// Command to be executed when user clicks on any photo.
+        /// It will pass as an argument the clicked item.
+        /// </summary>
         public ExtendedCommand<Photo> PhotoClickedCommand { get; set; }
 
         #endregion
@@ -90,17 +96,27 @@ namespace ExploreFlicker.ViewModels
         #region Methods
 
         #region Load Recent photos methods
+
+        /// <summary>
+        /// This method will load first page of photos.
+        /// </summary>
+        /// <returns></returns>
         private async Task LoadInitialPhotosAsync()
         {
+            //Disable command until executing is finished
             LoadInitialPhotosCommand.CanExecute = false;
+
+            //Show progress to user
             IsBusy = true;
             BusyMessage = _resources.Loading;
+
+            //Clear previous error
+            ErrorMessage = null;
             try
             {
                 var response = await LoadPhotosAsync(1, PerPage);
                 if (response.ResponseStatus == ResponseStatus.SuccessWithResult && response.Result.Photos != null)
                 {
-                    var list = response.Result.Photos.List;
                     UpdateCollection(response);
                 }
                 else
@@ -121,6 +137,11 @@ namespace ExploreFlicker.ViewModels
 
         }
 
+        /// <summary>
+        /// This methold will be triggered when user scrolls near the end of list.
+        /// It will add new results to the end of list.
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadMorePhotosAsync()
         {
             if (IsBusy) return;
@@ -143,6 +164,12 @@ namespace ExploreFlicker.ViewModels
             }
         }
 
+        /// <summary>
+        /// This method is used for both loading initial photos and for loading more photos.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="perPage"></param>
+        /// <returns></returns>
         private async Task<ResponseWrapper<RecentPhotosResponse>> LoadPhotosAsync(int page, int perPage)
         {
             var extras = new List<string> { RecentPhotosExtras.Geo, RecentPhotosExtras.Description };
@@ -156,6 +183,11 @@ namespace ExploreFlicker.ViewModels
             return data;
         }
 
+        /// <summary>
+        /// This method is responsible for adding new items to the collection
+        /// and updating current page number.
+        /// </summary>
+        /// <param name="response"></param>
         private void UpdateCollection(ResponseWrapper<RecentPhotosResponse> response)
         {
             CurrentPageOfRecent = response.Result.Photos.Page;
@@ -166,8 +198,12 @@ namespace ExploreFlicker.ViewModels
             }
         }
 
-        #endregion      
+        #endregion
 
+        /// <summary>
+        /// Method to be executed when user clicks on any photo.
+        /// Argument is the clicked photo.
+        /// </summary>
         private void PhotoClicked(Photo photo)
         {
             if (photo == null) return;

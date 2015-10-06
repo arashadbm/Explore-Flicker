@@ -12,6 +12,9 @@ namespace ExploreFlicker.ViewModels
     {
         #region properties
         private Photo _photo;
+        /// <summary>
+        /// Selected photo which will be used to showi pushpin on map.
+        /// </summary>
         public Photo Photo
         {
             get { return _photo; }
@@ -24,6 +27,9 @@ namespace ExploreFlicker.ViewModels
             }
         }
 
+        /// <summary>
+        /// Represents location of photo on map.
+        /// </summary>
         public Geopoint Geopoint
         {
             get
@@ -39,6 +45,10 @@ namespace ExploreFlicker.ViewModels
             }
         }
 
+        /// <summary>
+        /// It is used to normalize the anchor point of pushpin.
+        /// It can't be used directly in xaml, as there is a bug in the winrt map control.
+        /// </summary>
         public Point Anchor
         {
             get { return new Point(0.5, 1); }
