@@ -11,7 +11,22 @@ namespace ExploreFlicker.Controls
     {
         #region Fields
 
+        /// <summary>
+        /// This value is compared against the remaining offset in scrollviewer to end, 
+        /// when the remaining is less than it, it will trigger load more event.
+        /// A value of zero will make user aware that he reached end before loading again.
+        /// Other values implement infinite scrolling.
+        /// </summary>
+        private const int OffsetToFire = 1000;
 
+        //Not Used
+        /// <summary>
+        /// This value is compared against the scrolled percentage of scrollviewer, 
+        /// If the scrolled percentage is larger, it will trigger load more event.
+        /// A value of 100% will make user aware that he reached end before loading again.
+        /// Other values implement infinite scrolling.
+        /// </summary>
+        private const double LoadAfterScrollPrecentage = 70;
         private const String ScrollViewerPartName = "ScrollViewer";
         private ScrollViewer _rootScrollViewer;
         #endregion
@@ -141,6 +156,7 @@ namespace ExploreFlicker.Controls
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
             UpdateLoadMoreState(false);
             _rootScrollViewer = (ScrollViewer)GetTemplateChild(ScrollViewerPartName);
             if (_rootScrollViewer != null)
@@ -161,9 +177,16 @@ namespace ExploreFlicker.Controls
         private void _rootScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             double pos = _rootScrollViewer.VerticalOffset;
-            if (e.IsIntermediate) return;
+            //if (e.IsIntermediate) return;
             Debug.WriteLine("diff: " + Math.Abs(pos - _rootScrollViewer.ScrollableHeight));
-            if (Math.Abs(_rootScrollViewer.ScrollableHeight) > 1e-6 && Math.Abs(pos - _rootScrollViewer.ScrollableHeight) <= 0)
+
+            //If items are few, There shouldn't be load more
+            if (Math.Abs(_rootScrollViewer.ScrollableHeight - _rootScrollViewer.ActualHeight) < 1e-6)
+                return;
+            //scrolled percentage
+            // double percentage = (pos / _rootScrollViewer.ScrollableHeight) * 100;
+
+            if (Math.Abs(_rootScrollViewer.ScrollableHeight) > 1e-6 && Math.Abs(pos - _rootScrollViewer.ScrollableHeight) <= OffsetToFire)
             {
                 //TODO:Check why it will call twice if there is not execution code in LoadMoreRequested event
 
@@ -172,7 +195,6 @@ namespace ExploreFlicker.Controls
                     if (IsLoadingMoreEnabled && !IsLoadingMore && LoadMoreRequested != null)
                     {
                         IsLoadingMore = true;
-                        _rootScrollViewer.ChangeView(null, _rootScrollViewer.ScrollableHeight - 8, null);
                         UpdateLoadMoreState(true);
                         OnLoadMoreRequested(new LoadMoreEventArgs(this));
                     }

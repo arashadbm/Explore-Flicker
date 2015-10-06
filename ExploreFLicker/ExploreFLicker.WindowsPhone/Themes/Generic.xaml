@@ -90,8 +90,8 @@
         						IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
         						BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
         						AutomationProperties.AccessibilityView="Raw">
-
-                                <ItemsPresenter
+                                <Grid>
+                                    <ItemsPresenter
         								Header="{TemplateBinding Header}" 
         								HeaderTemplate="{TemplateBinding HeaderTemplate}"
         								HeaderTransitions="{TemplateBinding HeaderTransitions}"
@@ -100,6 +100,10 @@
         								FooterTransitions="{TemplateBinding FooterTransitions}"
         								Padding="{TemplateBinding Padding}"  />
 
+                                    <Grid x:Name="LoadMoreGrid"  VerticalAlignment="Bottom" >
+                                        <ProgressBar x:Name="LoadMoreProgressContent" Margin="8" Height="10" IsIndeterminate="True"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Grid>
                             </ScrollViewer>
                             <StackPanel x:Name="EmptyMessageGrid" Visibility="{Binding  EmptyContent, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibleNotEmptyConverter}}"
                                         VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -115,10 +119,6 @@
                                         Visibility="{Binding EmptyRefreshCommand, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibleNotEmptyConverter}}"/>
 
                             </StackPanel>
-
-                            <Grid x:Name="LoadMoreGrid"  VerticalAlignment="Bottom" >
-                                <ProgressBar x:Name="LoadMoreProgressContent" Margin="8" Height="10" IsIndeterminate="True"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                            </Grid>
 
                         </Grid>
                     </Border>
