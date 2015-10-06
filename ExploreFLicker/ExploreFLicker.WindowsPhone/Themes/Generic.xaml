@@ -12,6 +12,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Viewbox Margin="0,0,0,0" Width="100" Height="100" Visibility="{Binding GeometryPath, Converter={StaticResource VisibleNotEmptyConverter}}">
                 <Path  FlowDirection="LeftToRight"  Data="{Binding GeometryPath, Converter={StaticResource PathToGeometryConverter}}" Fill="#FFE7E7E7"/>
@@ -100,11 +101,20 @@
         								Padding="{TemplateBinding Padding}"  />
 
                             </ScrollViewer>
-
-                            <ContentPresenter Content="{Binding EmptyContent, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            <StackPanel x:Name="EmptyMessageGrid" Visibility="{Binding  EmptyContent, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibleNotEmptyConverter}}"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                <ContentPresenter Content="{Binding EmptyContent, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                   ContentTemplate="{Binding EmptyContentTemplate, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                  VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding  EmptyContent, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibleNotEmptyConverter}}" 
+                                                   
                                                  />
+
+                                <Button Grid.Row="2" 
+                                        HorizontalAlignment="Center"
+                                        Content="Refresh"
+                                        Command="{Binding EmptyRefreshCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        Visibility="{Binding EmptyRefreshCommand, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibleNotEmptyConverter}}"/>
+
+                            </StackPanel>
 
                             <Grid x:Name="LoadMoreGrid"  VerticalAlignment="Bottom" >
                                 <ProgressBar x:Name="LoadMoreProgressContent" Margin="8" Height="10" IsIndeterminate="True"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>

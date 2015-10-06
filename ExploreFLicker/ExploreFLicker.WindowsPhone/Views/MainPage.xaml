@@ -8,7 +8,8 @@
     xmlns:controls="using:ExploreFlicker.Controls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    mc:Ignorable="d"
+	xmlns:converters="using:ExploreFlicker.Converters"
+	mc:Ignorable="d"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <controls:ExtendedPage.BottomAppBar>
@@ -17,7 +18,9 @@
         </CommandBar>
     </controls:ExtendedPage.BottomAppBar>
     <controls:ExtendedPage.Resources>
-
+        <converters:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
+        <converters:PathToGeometryConverter x:Key="PathToGeometryConverter" />
+        <converters:VisibleNotEmptyConverter x:Key="VisibleNotEmptyConverter" />
 
         <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
             <!--ItemsWrapGrid supports virtualization,
@@ -115,6 +118,7 @@
 				ItemsSource="{Binding PhotosCollection}"
                 ItemTemplate="{StaticResource ThumbnailTemplate}"
                 EmptyContent="{Binding ErrorMessage}"
+                EmptyRefreshCommand="{Binding LoadInitialPhotosCommand}"
                 ItemsPanel="{StaticResource GalleryItemsPanelTemplate}"
 				SelectionMode="None" ItemContainerStyle="{StaticResource ItemContainerStyle}"
 				IsSwipeEnabled="false"    >

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -99,6 +100,20 @@ namespace ExploreFlicker.Controls
 
         #endregion
 
+        #region EmptyRefreshCommand
+
+        public ICommand EmptyRefreshCommand
+        {
+            get { return (ICommand)GetValue(EmptyRefreshCommandProperty); }
+            set { SetValue(EmptyRefreshCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for EmptyRefreshCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EmptyRefreshCommandProperty =
+            DependencyProperty.Register("EmptyRefreshCommand", typeof(ICommand), typeof(VerticalGridView), new PropertyMetadata(null));
+
+        #endregion
+
         #region  Empty Content Mode
 
         public EmptyContentMode EmptyContentMode
@@ -114,8 +129,6 @@ namespace ExploreFlicker.Controls
         private static void OnEmptyContentModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
         }
-
-
 
         #endregion
 
