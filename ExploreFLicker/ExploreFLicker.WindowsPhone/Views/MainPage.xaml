@@ -17,14 +17,17 @@
         </CommandBar>
     </controls:ExtendedPage.BottomAppBar>
     <controls:ExtendedPage.Resources>
-       
+
 
         <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
-            <VariableSizedWrapGrid SizeChanged="WrapGrid_SizeChanged"  Orientation="Horizontal" MaximumRowsOrColumns="2" />
+            <!--ItemsWrapGrid supports virtualization,
+            Don't used WrapGrid or VariableSizedWrapGrid they don't have virtualization-->
+            <ItemsWrapGrid SizeChanged="WrapGrid_SizeChanged"   Orientation="Horizontal" MaximumRowsOrColumns="2" />
         </ItemsPanelTemplate>
 
         <Style x:Key="ItemContainerStyle" TargetType="GridViewItem">
-            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Margin" Value="12"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

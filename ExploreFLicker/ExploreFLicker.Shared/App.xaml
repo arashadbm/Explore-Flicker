@@ -12,15 +12,15 @@
 
         <!--Square Image Thumbnail Template-->
         <DataTemplate x:Key="ThumbnailTemplate">
-            <Grid>
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Image Grid.Row="0"  Source="{Binding ThumbnailPath}"/>
+                <Image Grid.Row="0"  Source="{Binding ThumbnailPath}" Stretch="UniformToFill"/>
                 <TextBlock Grid.Row="1" Text="{Binding Title}" 
-                                   MaxLines="1" TextWrapping="NoWrap"
-                                   Margin="8" TextAlignment="Center" 
+                                   MaxLines="1" TextWrapping="NoWrap" TextAlignment="Center" 
+                                   Margin="8,8,8,0"
                                    VerticalAlignment="Bottom"
                                    FontSize="{StaticResource TextStyleMediumFontSize}"/>
             </Grid>

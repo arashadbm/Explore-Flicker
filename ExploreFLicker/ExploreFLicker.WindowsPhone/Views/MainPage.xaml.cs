@@ -123,7 +123,7 @@ namespace ExploreFlicker.Views
         private void WrapGrid_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
             if (!(e.NewSize.Width > 0)) return;
-            VariableSizedWrapGrid itemsWrapGrid = sender as VariableSizedWrapGrid;
+            ItemsWrapGrid itemsWrapGrid = sender as ItemsWrapGrid;
             if (itemsWrapGrid == null) return;
             var width = (e.NewSize.Width);
             itemsWrapGrid.ItemWidth = width / 2;
