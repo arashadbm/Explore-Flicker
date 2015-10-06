@@ -20,6 +20,11 @@
 
 
     </Page.Resources>
+    <controls:ExtendedPage.BottomAppBar>
+        <CommandBar IsOpen="{Binding IsMapAvailable}" Visibility="{Binding IsMapAvailable, Converter={StaticResource VisibleWhenTrueConverter}}">
+            <AppBarButton x:Uid="MapBarButton" Icon="Map" Label="Map" Command="{Binding ShowMapCommand}" CommandParameter="{Binding SelectedPhoto}"/>
+        </CommandBar>
+    </controls:ExtendedPage.BottomAppBar>
 
     <!--
         This grid acts as a root panel for the page that defines two rows:

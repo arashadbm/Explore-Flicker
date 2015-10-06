@@ -1,28 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿
+using Bing.Maps;
+using ExploreFlicker.Common;
 using ExploreFlicker.Controls;
+using ExploreFlicker.Models.Response;
+using ExploreFlicker.ViewModels;
 
 
 namespace ExploreFlicker.Views
 {
-
     public sealed partial class MapView : ExtendedPage
     {
+        private readonly MapViewModel _mapViewModel;
+
         public MapView()
         {
             this.InitializeComponent();
+            _mapViewModel = (MapViewModel)DataContext;
+        }
+
+        protected override void LoadState(object sender, LoadStateEventArgs e)
+        {
+            base.LoadState(sender, e);
+            var photo = e.NavigationParameter as Photo;
+            if (photo == null) return;
+            _mapViewModel.Photo = photo;
+
+            //add pushpin
+            Pushpin bin = new Pushpin()
+            {
+                Text = string.IsNullOrWhiteSpace(photo.Title) ? "Photo" : photo.Title
+            };
+            MapLayer.SetPosition(bin, _mapViewModel.Location);
+            Map.Children.Add(bin);
+            //Zoom the map to the specified location  and zoom level 1.
+            Map.SetView(_mapViewModel.Location, 16);
         }
     }
 }

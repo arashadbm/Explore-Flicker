@@ -85,6 +85,11 @@ namespace ExploreFlicker.Viewmodels
         {
             get { return Container.Resolve<Resources>(); }
         }
+
+        public INavigationService NavigationService
+        {
+            get { return Container.Resolve<INavigationService>(); }
+        }
         #endregion
 
         #region View Models Properties

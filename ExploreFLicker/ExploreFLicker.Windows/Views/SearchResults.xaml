@@ -1,7 +1,7 @@
 ﻿<controls:ExtendedPage
     x:Name="PageRoot"
-    x:Class="ExploreFlicker.Views.MainPage"
-    DataContext="{Binding MainViewModel,Source={StaticResource Locator}}"
+    x:Class="ExploreFlicker.Views.SearchResults"
+    DataContext="{Binding SearchViewModel,Source={StaticResource Locator}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ExploreFlicker.Views"
@@ -86,6 +86,7 @@
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -101,31 +102,46 @@
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-            <TextBlock x:Name="PageTitle" x:Uid="MainPageTitleTb" Text="Flickr Explorer" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+            <TextBlock x:Name="PageTitle" x:Uid="MainPageTitleTb" Text="Search Results" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
             <ProgressBar Height="10" VerticalAlignment="Bottom" 
                          Margin="0,0,0,15" IsIndeterminate="True"
                          Visibility="{Binding IsBusy, Converter={StaticResource VisibleWhenTrueConverter}}" 
                          Grid.ColumnSpan="2" Grid.Column="0" />
-            <SearchBox HorizontalAlignment="Right"  Grid.Column="1" VerticalAlignment="Center" Height="50" Margin="0,24,40,0" Width="350" FontSize="18.667" QuerySubmitted="SearchBox_QuerySubmitted"  />
 
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="SearchBarGrid" Margin="116,0,0,20" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <CompositeTransform/>
+            </Grid.RenderTransform>
+            <controls:SearchTextBox x:Name="SearchTextBox" 
+                                         TextWrapping="Wrap" 
+                                        Text="" VerticalAlignment="Stretch" 
+                                        HorizontalAlignment="Left"
+                                        Height="50"
+                                        FontSize="18.667"
+                                        d:LayoutOverrides="Height"
+                                        Width="500"
+                                        SearchRequestedCommand="{Binding SearchPhotosCommand}"
+                                        />
         </Grid>
 
         <!-- Horizontal scrolling grid -->
         <controls:HorizontalGridView
-				x:Name="RecentPhotosGridView"
+				x:Name="SearchResultsGridView"
 				AutomationProperties.AutomationId="ThumbnailsGridView"
 				AutomationProperties.Name="Flickr Images" 
 				TabIndex="1"
-                Grid.Row="1" 
-                ItemsSource="{Binding PhotosCollection}"
-                ItemTemplate="{StaticResource ThumbnailTemplate}"
-                Padding="116,136,116,46"
+                Grid.Row="2"
+                Padding="116,20,116,22"
 				IsItemClickEnabled="true"
                 IsLoadingMoreEnabled="True"
                 LoadMoreRequested="PhotosCollections_OnLoadMoreRequested"
+				ItemsSource="{Binding SearchCollection}"
+                ItemTemplate="{StaticResource ThumbnailTemplate}"
                 EmptyContent="{Binding ErrorMessage}"
-                EmptyRefreshCommand="{Binding LoadInitialPhotosCommand}"
+                EmptyRefreshCommand="{Binding SearchPhotosCommand}"
                 ItemsPanel="{StaticResource GalleryItemsPanelTemplate}"
 				SelectionMode="None" ItemContainerStyle="{StaticResource ItemContainerStyle}"
 				IsSwipeEnabled="false"    >

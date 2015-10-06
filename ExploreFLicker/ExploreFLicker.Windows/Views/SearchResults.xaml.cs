@@ -16,51 +16,31 @@ using Windows.UI.Xaml.Navigation;
 using ExploreFlicker.Controls;
 using ExploreFlicker.ViewModels;
 using ExploreFLicker.ViewModels;
-using ExploreFlicker.Viewmodels;
+
 
 namespace ExploreFlicker.Views
 {
 
-    public sealed partial class MainPage : ExtendedPage
+    public sealed partial class SearchResults : ExtendedPage
     {
         #region Fields
-        private readonly MainViewModel _mainViewModel;
+        private readonly SearchViewModel _searchViewModel;
         #endregion
 
         #region initialization
-        public MainPage()
+        public SearchResults()
         {
             this.InitializeComponent();
 
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
             //Set view models fields
-            _mainViewModel = (MainViewModel)DataContext;
+            _searchViewModel = (SearchViewModel)DataContext;
         }
         #endregion
 
         #region  Methods
 
-        #region  OnNavigate & Reset Cache
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            //Clear cache, if page is coming back from Gallery View.
-            if (e.NavigationMode == NavigationMode.Back)
-                ResetPageCache();
-        }
-
-        /// <summary>
-        /// This resets the frame cache, it will clear all pages cache except those with Required cache mode.
-        /// </summary>
-        private void ResetPageCache()
-        {
-            var cacheSize = Frame.CacheSize;
-            Frame.CacheSize = 0;
-            Frame.CacheSize = cacheSize;
-        }
-        #endregion
 
         #region Load data events
         protected override void LoadState(object sender, LoadStateEventArgs e)
@@ -68,7 +48,16 @@ namespace ExploreFlicker.Views
             base.LoadState(sender, e);
             if (NeedsRefresh)
             {
-                _mainViewModel.LoadInitialPhotosCommand.Execute(null);
+                string searchTerm = e.NavigationParameter as string;
+                if (String.IsNullOrWhiteSpace(searchTerm))
+                {
+                    SearchTextBox.Text = "";
+                    return;
+                }
+                //Set Search TextBox
+                SearchTextBox.Text = searchTerm;
+                //load
+                _searchViewModel.SearchPhotosCommand.Execute(searchTerm);
             }
         }
 
@@ -80,18 +69,14 @@ namespace ExploreFlicker.Views
         /// <param name="e"></param>
         private async void PhotosCollections_OnLoadMoreRequested(object sender, HorizontalGridView.LoadMoreEventArgs e)
         {
-            await _mainViewModel.LoadMorePhotosAsync();
+            await _searchViewModel.LoadMoreSearchResultsAsync(SearchTextBox.Text);
             e.IsLoadingMore = false;
         }
 
-        #endregion
+
 
         #endregion
 
-        private void SearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
-        {
-            if (string.IsNullOrWhiteSpace(args.QueryText)) return;
-            ViewModelLocator.Locator.NavigationService.NavigateByPage<SearchResults>(args.QueryText);
-        }
+        #endregion
     }
 }
