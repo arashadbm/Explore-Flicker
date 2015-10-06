@@ -68,6 +68,7 @@ namespace ExploreFlicker.Viewmodels
             builder.RegisterType<MainViewModel>();
             builder.RegisterType<GalleryViewModel>();
             builder.RegisterType<MapViewModel>();
+            builder.RegisterType<SearchViewModel>();
             #endregion
 
             Container = builder.Build();
@@ -91,6 +92,11 @@ namespace ExploreFlicker.Viewmodels
         public MainViewModel MainViewModel
         {
             get { return Container.Resolve<MainViewModel>(); }
+        }
+
+        public SearchViewModel SearchViewModel
+        {
+            get { return Container.Resolve<SearchViewModel>(); }
         }
 
         public GalleryViewModel GalleryViewModel

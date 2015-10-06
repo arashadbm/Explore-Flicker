@@ -52,10 +52,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryNavigationParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Request\FlickerParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Request\GetRecentPhotosParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Request\SearchPhotoParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Response\Description.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Response\Photo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Response\Photos.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Response\RecentPhotosResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Response\SearchPhotosResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GalleryViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MapViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SearchViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>

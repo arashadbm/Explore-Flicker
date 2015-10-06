@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ExploreFlicker.Models.Response;
 
-namespace ExploreFLicker.Models
+namespace ExploreFlicker.Models
 {
     public class GalleryNavigationParameters
     {

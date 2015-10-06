@@ -11,66 +11,173 @@
     mc:Ignorable="d"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <controls:ExtendedPage.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Find" Label="appbarbutton" Click="SearchClicked"/>
+        </CommandBar>
+    </controls:ExtendedPage.BottomAppBar>
+    <controls:ExtendedPage.Resources>
+        <DataTemplate x:Key="ItemTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0"  Source="{Binding ThumbnailPath}"/>
+                <TextBlock Grid.Row="1" Text="{Binding Title}" 
+                                   MaxLines="1" TextWrapping="NoWrap"
+                                   Margin="8" TextAlignment="Center" 
+                                   VerticalAlignment="Bottom"
+                                   FontSize="{StaticResource TextStyleMediumFontSize}"/>
+            </Grid>
+        </DataTemplate>
 
-    <Grid >
+        <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
+            <VariableSizedWrapGrid SizeChanged="WrapGrid_SizeChanged"  Orientation="Horizontal" MaximumRowsOrColumns="2" />
+        </ItemsPanelTemplate>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Style x:Key="ItemContainerStyle" TargetType="GridViewItem">
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        </Style>
+    </controls:ExtendedPage.Resources>
 
-        <!--Top Panel-->
-        <Grid Margin="12,0" >
-            <ProgressBar Height="10" VerticalAlignment="Top"
+    <Grid x:Name="LayoutGrid" >
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="SearchStateGroup">
+                <VisualState x:Name="HiddenState">
+                    <Storyboard>
+                        <DoubleAnimation Duration="0" To="-100" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SearchBarGrid" d:IsOptimized="True"/>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="RecentPhotosGrid">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SearchGrid">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="VisibleState">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SearchBarGrid">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="-100"/>
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="RecentPhotosGrid">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SearchGrid">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <!--Recent Photos View-->
+        <Grid x:Name="RecentPhotosGrid" Margin="12,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--Dummy button will be used to steal focus from search text box, Programatically-->
+            <Button x:Name="DummyButton" Width="0" MinWidth="0" Height="0" MinHeight="0"/>
+            
+            <!--Explore Recent photos Top Panel-->
+            <Grid Grid.Row="0" Margin="12,0" >
+
+                <ProgressBar Height="10" VerticalAlignment="Top"
                          Margin="0,0,0,8" IsIndeterminate="{Binding IsBusy}" 
                          Visibility="{Binding IsBusy, Converter={StaticResource VisibleWhenTrueConverter}}" 
                          />
+            </Grid>
+
+            <!--Recent Photos-->
+            <controls:VerticalGridView
+				x:Name="RecentPhotosGridView"
+				AutomationProperties.AutomationId="ThumbnailsGridView"
+				AutomationProperties.Name="Flickr Images" 
+				TabIndex="1"
+                Grid.Row="1"
+				IsItemClickEnabled="true"
+                IsLoadingMoreEnabled="True"
+                LoadMoreRequested="PhotosCollections_OnLoadMoreRequested"
+				ItemsSource="{Binding PhotosCollection}"
+                ItemTemplate="{StaticResource ItemTemplate}"
+                ItemsPanel="{StaticResource GalleryItemsPanelTemplate}"
+				SelectionMode="None" ItemContainerStyle="{StaticResource ItemContainerStyle}"
+				IsSwipeEnabled="false"    >
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="ItemClick">
+                        <core:InvokeCommandAction Command="{Binding PhotoClickedCommand}" InputConverter="{StaticResource ItemClickedConverter}"/>
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </controls:VerticalGridView>
+
+
         </Grid>
 
-        <!-- Content Grid -->
-        <Grid Grid.Row="1" Margin="12,0">
+
+        <!--Search View -->
+        <Grid x:Name="SearchGrid"  Margin="12,0" DataContext="{Binding SearchViewModel, Source={StaticResource Locator}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--Search Top Panel-->
+            <Grid Margin="12,0" >
+                <ProgressBar Height="10" VerticalAlignment="Top"
+                         Margin="0,0,0,8" IsIndeterminate="{Binding IsBusy}" 
+                         Visibility="{Binding IsBusy, Converter={StaticResource VisibleWhenTrueConverter}}" 
+                         />
+                <Grid x:Name="SearchBarGrid" Margin="0,24,0,12" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
+                    <controls:SearchTextBox x:Name="SearchTextBox" 
+                                        Margin="12,0" TextWrapping="Wrap" 
+                                        Text="" VerticalAlignment="Stretch" 
+                                        d:LayoutOverrides="Height"
+                                        SearchRequestedCommand="{Binding SearchPhotosCommand}"
+                                        />
+                </Grid>
+            </Grid>
+
             <controls:VerticalGridView
-				x:Name="ItemListView"
+                Grid.Row="1"
+				x:Name="SearchResultsGridView"
 				AutomationProperties.AutomationId="ThumbnailsGridView"
 				AutomationProperties.Name="Flickr Images" 
 				TabIndex="1"
 				IsItemClickEnabled="true"
                 IsLoadingMoreEnabled="True"
-                LoadMoreRequested="PhotosCollections_OnLoadMoreRequested"
-				ItemsSource="{Binding PhotosCollection}"
-				SelectionMode="None"
+                LoadMoreRequested="SearchCollections_OnLoadMoreRequested"
+				ItemsSource="{Binding SearchCollection}"
+                ItemTemplate="{StaticResource ItemTemplate}"
+                ItemsPanel="{StaticResource GalleryItemsPanelTemplate}"
+				SelectionMode="None" ItemContainerStyle="{StaticResource ItemContainerStyle}"
 				IsSwipeEnabled="false"    >
-                <controls:VerticalGridView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Image Grid.Row="0"  Source="{Binding ThumbnailPath}"/>
-                            <TextBlock Grid.Row="1" Text="{Binding Title}" 
-                                   MaxLines="1" TextWrapping="NoWrap"
-                                   Margin="8" TextAlignment="Center" 
-                                   VerticalAlignment="Bottom"
-                                   FontSize="{StaticResource TextStyleMediumFontSize}"/>
-                        </Grid>
-                    </DataTemplate>
-                </controls:VerticalGridView.ItemTemplate>
-
-                <controls:VerticalGridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VariableSizedWrapGrid SizeChanged="WrapGrid_SizeChanged"  Orientation="Horizontal" MaximumRowsOrColumns="2" />
-                    </ItemsPanelTemplate>
-                </controls:VerticalGridView.ItemsPanel>
-                <controls:VerticalGridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="Margin" Value="0,0,0,0"/>
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        <Setter Property="VerticalAlignment" Value="Stretch"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </controls:VerticalGridView.ItemContainerStyle>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="ItemClick">
                         <core:InvokeCommandAction Command="{Binding PhotoClickedCommand}" InputConverter="{StaticResource ItemClickedConverter}"/>
@@ -78,5 +185,6 @@
                 </interactivity:Interaction.Behaviors>
             </controls:VerticalGridView>
         </Grid>
+
     </Grid>
 </controls:ExtendedPage>

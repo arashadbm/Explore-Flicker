@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Navigation;
 using ExploreFlicker.Common;
 using ExploreFlicker.Controls;
 using ExploreFlicker.Models.Response;
-using ExploreFLicker.ViewModels;
+using ExploreFlicker.ViewModels;
 
 
 namespace ExploreFlicker.Views

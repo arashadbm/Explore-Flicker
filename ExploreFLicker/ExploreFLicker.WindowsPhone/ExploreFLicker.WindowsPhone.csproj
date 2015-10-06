@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\EmptyContentMode.cs" />
+    <Compile Include="Controls\SearchTextBox.cs" />
     <Compile Include="Controls\VerticalGridView.cs" />
     <Compile Include="Views\GalleryView.xaml.cs">
       <DependentUpon>GalleryView.xaml</DependentUpon>
@@ -152,6 +153,9 @@
       <Generator>ReswFileCodeGenerator</Generator>
       <LastGenOutput>Resources.cs</LastGenOutput>
     </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserControls\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

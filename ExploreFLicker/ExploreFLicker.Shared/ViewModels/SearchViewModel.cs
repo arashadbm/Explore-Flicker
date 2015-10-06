@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ExploreFlicker.Common;
 using ExploreFlicker.DataServices;
 using ExploreFlicker.Helpers;
+using ExploreFlicker.Models;
 using ExploreFlicker.Models.Request;
 using ExploreFlicker.Models.Response;
 using ExploreFlicker.Views;
 using ExploreFlickr.Strings;
-using ExploreFlicker.Models;
-using ExploreFlicker.ViewModels;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
 
-namespace ExploreFlicker.ViewModels
+namespace ExploreFLicker.ViewModels
 {
-    public class MainViewModel : BindableBase
+    public class SearchViewModel : BindableBase
     {
         #region Fields
         private const int PerPage = 40;
@@ -26,11 +26,10 @@ namespace ExploreFlicker.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IRequestMessageResolver _messageResolver;
         private readonly Resources _resources;
-
+        private CancellationTokenSource _cts;
         #endregion
 
         #region Properties
-
         private bool _isBusy;
         public bool IsBusy
         {
@@ -52,56 +51,66 @@ namespace ExploreFlicker.ViewModels
             set { SetProperty(ref _errorMessage, value); }
         }
 
-        /// <summary>
-        /// This represensts the current page number in Recent photos.
-        /// </summary>
-        private int CurrentPageOfRecent { get; set; }
 
-        private readonly ObservableCollection<Photo> _photosCollection = new ObservableCollection<Photo>();
-        public ObservableCollection<Photo> PhotosCollection
+        /// <summary>
+        /// This represensts the current page number in search results photos.
+        /// </summary>
+        private int CurrentPageOfSearch { get; set; }
+
+
+        private readonly ObservableCollection<Photo> _searchCollection = new ObservableCollection<Photo>();
+        public ObservableCollection<Photo> SearchCollection
         {
-            get { return _photosCollection; }
+            get { return _searchCollection; }
         }
 
         #endregion
 
         #region Initialization
 
-        public MainViewModel(IFlickrService flickrService, Resources resources, INavigationService navigationService, IRequestMessageResolver messageResolver)
+        public SearchViewModel(IFlickrService flickrService, Resources resources, INavigationService navigationService, IRequestMessageResolver messageResolver)
         {
             _flickrService = flickrService;
             _resources = resources;
             _navigationService = navigationService;
             _messageResolver = messageResolver;
             //Initialize Commands
-            LoadInitialPhotosCommand = new AsyncExtendedCommand(LoadInitialPhotosAsync);
+            SearchPhotosCommand = new AsyncExtendedCommand<string>(SearchPhotosAsync);
             PhotoClickedCommand = new ExtendedCommand<Photo>(PhotoClicked);
         }
 
         #endregion
 
         #region Commands
-
-        public AsyncExtendedCommand LoadInitialPhotosCommand { get; set; }
+        public AsyncExtendedCommand<string> SearchPhotosCommand { get; set; }
         public ExtendedCommand<Photo> PhotoClickedCommand { get; set; }
 
         #endregion
 
         #region Methods
-
-        #region Load Recent photos methods
-        private async Task LoadInitialPhotosAsync()
+        private async Task SearchPhotosAsync(string searchTerm)
         {
-            LoadInitialPhotosCommand.CanExecute = false;
-            IsBusy = true;
-            BusyMessage = _resources.Loading;
+            //Cancel previous call if any
+            ReAssignCancellationToken();
+            var token = _cts.Token;
+
+            //Check if the search term is empty before making request
+            if (String.IsNullOrWhiteSpace(searchTerm))
+            {
+                IsBusy = false;
+                SearchCollection.Clear();
+                return;
+            }
             try
             {
-                var response = await LoadPhotosAsync(1, PerPage);
+                IsBusy = true;
+                BusyMessage = _resources.Loading;
+                SearchCollection.Clear();
+                var response = await SearchPhotosAsync(1, PerPage, searchTerm, token);
+                if (token.IsCancellationRequested) return;
                 if (response.ResponseStatus == ResponseStatus.SuccessWithResult && response.Result.Photos != null)
                 {
-                    var list = response.Result.Photos.List;
-                    UpdateCollection(response);
+                    UpdateSearchCollection(response);
                 }
                 else
                 {
@@ -110,63 +119,77 @@ namespace ExploreFlicker.ViewModels
             }
             catch (Exception)
             {
-                //Show Error
-                ErrorMessage = RequestMessage.GetClientErrorMessage();
+                if (!token.IsCancellationRequested)
+                {
+                    //Show Error
+                    ErrorMessage = RequestMessage.GetClientErrorMessage();
+                }
             }
             finally
             {
-                LoadInitialPhotosCommand.CanExecute = true;
-                IsBusy = false;
+                if (!token.IsCancellationRequested)
+                {
+                    //Don't set is busy when token is canceled, as there is other ongoing operation
+                    IsBusy = false;
+                }
             }
 
         }
 
-        public async Task LoadMorePhotosAsync()
+        public void ReAssignCancellationToken()
         {
-            if (IsBusy) return;
+            if (_cts != null && !_cts.IsCancellationRequested)
+            {
+                _cts.Cancel();
+            }
+            //Create new cts for the new task
+            _cts = new CancellationTokenSource();
+        }
+
+        public async Task LoadMoreSearchResultsAsync(string searchTerm)
+        {
+            //Cancel previous call if any
+            ReAssignCancellationToken();
+            var token = _cts.Token;
             try
             {
-                LoadInitialPhotosCommand.CanExecute = false;
-                var response = await LoadPhotosAsync(CurrentPageOfRecent + 1, PerPage);
+
+                var response = await SearchPhotosAsync(CurrentPageOfSearch + 1, PerPage, searchTerm, token);
+                if (token.IsCancellationRequested) return;
                 if (response.ResponseStatus == ResponseStatus.SuccessWithResult)
                 {
-                    UpdateCollection(response);
+                    UpdateSearchCollection(response);
                 }
             }
             catch (Exception)
             {
                 // ignored
             }
-            finally
-            {
-                LoadInitialPhotosCommand.CanExecute = true;
-            }
         }
 
-        private async Task<ResponseWrapper<RecentPhotosResponse>> LoadPhotosAsync(int page, int perPage)
+        private async Task<ResponseWrapper<SearchPhotosResponse>> SearchPhotosAsync(int page, int perPage, string searchTerm, CancellationToken token)
         {
             var extras = new List<string> { RecentPhotosExtras.Geo, RecentPhotosExtras.Description };
-            var parameters = new GetRecentPhotosParameters()
+            var parameters = new SearchPhotoParameters()
             {
                 Extras = extras,
                 Page = page,
-                PerPage = perPage
+                PerPage = perPage,
+                Text = searchTerm
             };
-            var data = await _flickrService.GetRecentPhotosAsync(parameters);
+            var data = await _flickrService.SearchPhotosAsync(parameters);
             return data;
         }
 
-        private void UpdateCollection(ResponseWrapper<RecentPhotosResponse> response)
+        private void UpdateSearchCollection(ResponseWrapper<SearchPhotosResponse> response)
         {
-            CurrentPageOfRecent = response.Result.Photos.Page;
+            CurrentPageOfSearch = response.Result.Photos.Page;
             var list = response.Result.Photos.List;
             foreach (var photo in list)
             {
-                PhotosCollection.Add(photo);
+                SearchCollection.Add(photo);
             }
         }
-
-        #endregion      
 
         private void PhotoClicked(Photo photo)
         {
@@ -174,11 +197,10 @@ namespace ExploreFlicker.ViewModels
             var galleryParameters = new GalleryNavigationParameters()
             {
                 SelectedPhoto = photo,
-                Photos = PhotosCollection.ToList()
+                Photos = SearchCollection.ToList()
             };
             _navigationService.NavigateByPage<GalleryView>(galleryParameters);
         }
-
         #endregion
     }
 }

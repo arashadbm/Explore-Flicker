@@ -6,7 +6,7 @@ using Windows.Foundation;
 using ExploreFlicker.Common;
 using ExploreFlicker.Models.Response;
 
-namespace ExploreFLicker.ViewModels
+namespace ExploreFlicker.ViewModels
 {
     public class MapViewModel : BindableBase
     {

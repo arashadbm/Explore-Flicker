@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Foundation;
+#if WINDOWS_PHONE_APP
+using Windows.Phone.UI.Input;
+#endif
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -48,6 +51,7 @@ namespace ExploreFlicker.Controls
         {
             get { return _isActive; }
         }
+
 
         private NavigationMode _navigationMode;
         /// <summary>
@@ -106,6 +110,18 @@ namespace ExploreFlicker.Controls
         {
         }
 
+#if WINDOWS_PHONE_APP
+        /// <summary>
+        /// Listen for key press event to handle popups close or any other logic related to back key.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            if (e.Handled) return;
+        }
+#endif
+
 
         /// <summary>
         /// Use LoadState instead of this method, You can access the navigation parameter from LoadState method
@@ -117,6 +133,13 @@ namespace ExploreFlicker.Controls
             _navigationMode = e.NavigationMode;
 
             _isActive = true;
+
+#if WINDOWS_PHONE_APP
+
+            //Listen for Back key press event before Navigation helper does
+            //useful to handle back button in some cases
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+#endif
 
             base.OnNavigatedTo(e);
 
@@ -134,6 +157,12 @@ namespace ExploreFlicker.Controls
             //Set it's value to false when navigating from this page,
             //This can be used along with other factors to prevent unnecessary reloading.
             _isNewInstance = false;
+
+#if WINDOWS_PHONE_APP
+            //Release Back key press event
+            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+
+#endif
 
             base.OnNavigatedFrom(e);
 

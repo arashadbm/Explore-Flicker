@@ -12,5 +12,6 @@ namespace ExploreFlicker.DataServices
     public interface IFlickrService
     {
         Task<ResponseWrapper<RecentPhotosResponse>> GetRecentPhotosAsync(GetRecentPhotosParameters parameters, CancellationToken? token = null);
+        Task<ResponseWrapper<SearchPhotosResponse>> SearchPhotosAsync(SearchPhotoParameters parameters, CancellationToken? token = null);
     }
 }

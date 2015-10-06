@@ -14,8 +14,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ExploreFlicker.Common;
 using ExploreFlicker.Controls;
-using ExploreFLicker.Models;
-using ExploreFLicker.ViewModels;
+using ExploreFlicker.Models;
+using ExploreFlicker.ViewModels;
 
 
 namespace ExploreFlicker.Views

@@ -14,7 +14,7 @@ using ExploreFlickr.Strings;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
 
-namespace ExploreFLicker.ViewModels
+namespace ExploreFlicker.ViewModels
 {
     /// <summary>
     /// This viewmodel will be used to show galley of photos despite their original source, i.e Recent Photos, Search, etc...

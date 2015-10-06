@@ -135,6 +135,9 @@
   <data name="NoInternet" xml:space="preserve">
     <value>No Internet</value>
   </data>
+  <data name="SearchBarButton.Label" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="Success" xml:space="preserve">
     <value>Sucess</value>
   </data>

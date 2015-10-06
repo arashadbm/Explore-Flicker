@@ -12,7 +12,7 @@
     >
     <controls:ExtendedPage.BottomAppBar>
         <CommandBar Visibility="{Binding IsMapAvailable, Converter={StaticResource VisibleWhenTrueConverter}}">
-            <AppBarButton x:Uid="MapBarButton" Icon="Accept" Label="Map" Command="{Binding ShowMapCommand}" CommandParameter="{Binding SelectedPhoto}"/>
+            <AppBarButton x:Uid="MapBarButton" Icon="Map" Label="Map" Command="{Binding ShowMapCommand}" CommandParameter="{Binding SelectedPhoto}"/>
         </CommandBar>
     </controls:ExtendedPage.BottomAppBar>
 

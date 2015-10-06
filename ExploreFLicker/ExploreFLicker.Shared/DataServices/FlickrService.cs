@@ -38,5 +38,15 @@ namespace ExploreFlicker.DataServices
             request.RequestUrl = (BaseUrl).AppendQueryString(parameters);
             return await request.GetAsync<RecentPhotosResponse>(token);
         }
+
+        public async Task<ResponseWrapper<SearchPhotosResponse>> SearchPhotosAsync(SearchPhotoParameters parameters, CancellationToken? token = null)
+        {
+            var request = _requestFactory.Invoke();
+            parameters.ApiKey = APiKey;
+            parameters.Format = Format;
+            parameters.Nojsoncallback = NoJsonCallBack;
+            request.RequestUrl = (BaseUrl).AppendQueryString(parameters);
+            return await request.GetAsync<SearchPhotosResponse>(token);
+        }
     }
 }
