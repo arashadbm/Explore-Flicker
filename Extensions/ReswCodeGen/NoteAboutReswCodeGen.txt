@@ -1,0 +1,7 @@
+The original control is published here http://reswcodegen.codeplex.com/
+
+This is slightly modified to make properties as non static to be bindable.
+
+BE AWARE It will replace the original extension inside visual studio.
+
+It may fail to install it if you have higher version and You  will need to uninstall the original extension.

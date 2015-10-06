@@ -1,14 +1,79 @@
 ﻿<controls:ExtendedPage
+    x:Name="PageRoot"
     x:Class="ExploreFlicker.Views.GalleryView"
+    DataContext="{Binding GalleryViewModel,Source={StaticResource Locator}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ExploreFlicker.Views"
+    xmlns:common="using:ExploreFlicker.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:ExploreFlicker.Controls"
-    mc:Ignorable="d">
+    xmlns:converters="using:ExploreFlicker.Converters"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    mc:Ignorable="d"
+    >
 
+    <Page.Resources>
+        <converters:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
+
+
+    </Page.Resources>
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BackButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=PageRoot}"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        VerticalAlignment="Top"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+            <TextBlock x:Name="PageTitle" x:Uid="GalleryTitleTb" Text="Gallery" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+
+        </Grid>
+
+        <FlipView Grid.Row="1" x:Name="GalleryPivot" 
+               ItemsSource="{Binding Photos}" 
+               SelectedItem="{Binding SelectedPhoto,Mode=TwoWay}">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Grid.RowSpan="2" Source="{Binding MediumPath}" Stretch="Uniform"/>
+                        <Grid Grid.Row="1" Background="Cyan">
+                            <TextBlock FontSize="26"
+                               Margin="0,0,0,22"
+                               Text="{Binding Title}"
+                               TextWrapping="NoWrap" MaxWidth="150" MinWidth="40" TextTrimming="None"/>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
     </Grid>
 </controls:ExtendedPage>

@@ -19,10 +19,24 @@
     </controls:ExtendedPage.BottomAppBar>
     <controls:ExtendedPage.Resources>
         <converters:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
-        <converters:PathToGeometryConverter x:Key="PathToGeometryConverter" />
-        <converters:VisibleNotEmptyConverter x:Key="VisibleNotEmptyConverter" />
 
-        <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
+        <!--Square Image Thumbnail Template-->
+        <DataTemplate x:Key="ThumbnailTemplate">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0"  Source="{Binding ThumbnailPath}" Stretch="UniformToFill"/>
+                <TextBlock Grid.Row="1" Text="{Binding Title}" 
+                                   MaxLines="1" TextWrapping="NoWrap" TextAlignment="Center" 
+                                   Margin="8,8,8,0"
+                                   VerticalAlignment="Bottom"
+                                   FontSize="{StaticResource TextStyleMediumFontSize}"/>
+            </Grid>
+        </DataTemplate>
+
+                <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
             <!--ItemsWrapGrid supports virtualization,
             Don't used WrapGrid or VariableSizedWrapGrid they don't have virtualization-->
             <ItemsWrapGrid SizeChanged="WrapGrid_SizeChanged"   Orientation="Horizontal" MaximumRowsOrColumns="2" />

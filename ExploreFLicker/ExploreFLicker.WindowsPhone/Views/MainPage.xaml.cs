@@ -39,6 +39,8 @@ namespace ExploreFlicker.Views
         }
         #endregion
 
+        #region  Methods
+
         #region  OnNavigate & Reset Cache
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -130,6 +132,7 @@ namespace ExploreFlicker.Views
             itemsWrapGrid.ItemHeight = itemsWrapGrid.ItemWidth;
         }
 
+       
         /// <summary>
         /// Search bar button logic for switching between Recent photos and Search view.
         /// Pressing will show Search view, pressing again shows back the Recent photos.
@@ -149,6 +152,9 @@ namespace ExploreFlicker.Views
             }
         }
 
+        /// <summary>
+        /// Shows Search view.
+        /// </summary>
         private void GoToVisualState()
         {
             VisualStateManager.GoToState(this, VisibleStateName, true);
@@ -156,6 +162,9 @@ namespace ExploreFlicker.Views
             SearchTextBox.Focus(FocusState.Programmatic);
         }
 
+        /// <summary>
+        /// Responsible for hiding search view and resetting all search data.
+        /// </summary>
         private void GoToHiddenState()
         {
             VisualStateManager.GoToState(this, HiddenStateName, false);
@@ -170,5 +179,6 @@ namespace ExploreFlicker.Views
             //Hide keyboard by focusing on the dummy button.
             DummyButton.Focus(FocusState.Programmatic);
         }
+        #endregion
     }
 }
