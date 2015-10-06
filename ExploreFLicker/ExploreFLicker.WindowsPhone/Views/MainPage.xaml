@@ -13,7 +13,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <controls:ExtendedPage.BottomAppBar>
         <CommandBar>
-            <AppBarButton Icon="Find" Label="appbarbutton" Click="SearchClicked"/>
+            <AppBarButton x:Uid="SearchBarButton"  Icon="Find" Label="Search" Click="SearchClicked"/>
         </CommandBar>
     </controls:ExtendedPage.BottomAppBar>
     <controls:ExtendedPage.Resources>
@@ -102,7 +102,7 @@
             </Grid.RowDefinitions>
             <!--Dummy button will be used to steal focus from search text box, Programatically-->
             <Button x:Name="DummyButton" Width="0" MinWidth="0" Height="0" MinHeight="0"/>
-            
+
             <!--Explore Recent photos Top Panel-->
             <Grid Grid.Row="0" Margin="12,0" >
 
@@ -124,6 +124,7 @@
                 LoadMoreRequested="PhotosCollections_OnLoadMoreRequested"
 				ItemsSource="{Binding PhotosCollection}"
                 ItemTemplate="{StaticResource ItemTemplate}"
+                EmptyContent="{Binding ErrorMessage}"
                 ItemsPanel="{StaticResource GalleryItemsPanelTemplate}"
 				SelectionMode="None" ItemContainerStyle="{StaticResource ItemContainerStyle}"
 				IsSwipeEnabled="false"    >
@@ -176,6 +177,7 @@
 				ItemsSource="{Binding SearchCollection}"
                 ItemTemplate="{StaticResource ItemTemplate}"
                 ItemsPanel="{StaticResource GalleryItemsPanelTemplate}"
+                EmptyContent="{Binding ErrorMessage}"
 				SelectionMode="None" ItemContainerStyle="{StaticResource ItemContainerStyle}"
 				IsSwipeEnabled="false"    >
                 <interactivity:Interaction.Behaviors>

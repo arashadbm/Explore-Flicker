@@ -5,41 +5,59 @@
     xmlns:controls="using:ExploreFlicker.Controls"
     xmlns:converters="using:ExploreFlicker.Converters">
     <converters:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
+    <converters:PathToGeometryConverter x:Key="PathToGeometryConverter" />
+    <converters:VisibleNotEmptyConverter x:Key="VisibleNotEmptyConverter" />
+    <DataTemplate x:Key="DefaultMessageTemplate">
+        <Grid x:Name="MessageGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Viewbox Margin="0,0,0,0" Width="100" Height="100" Visibility="{Binding GeometryPath, Converter={StaticResource VisibleNotEmptyConverter}}">
+                <Path  FlowDirection="LeftToRight"  Data="{Binding GeometryPath, Converter={StaticResource PathToGeometryConverter}}" Fill="#FFE7E7E7"/>
+            </Viewbox>
+            <TextBlock  Margin="24,24,24,12" Grid.Row="1" TextAlignment="Center" TextWrapping="WrapWholeWords" FontSize="{StaticResource TextStyleExtraLargeFontSize}" LineHeight="{StaticResource TextStyleExtraExtraLargeFontSize}" Foreground="#FFC4C5C5" Text="{Binding Description}" />
+        </Grid>
+    </DataTemplate>
 
-
-    <Style TargetType="controls:VerticalGridView" >
-        <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="TabNavigation" Value="Once"/>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Top"/>
+    <Style TargetType="controls:VerticalGridView">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="TabNavigation" Value="Once" />
+        <Setter Property="IsSwipeEnabled" Value="True" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
-        <Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
-        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
-        <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True"/>
-        <Setter Property="IsSwipeEnabled" Value="True"/>
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+        <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False" />
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled" />
+        <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="False" />
+        <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+        <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True" />
+        <Setter Property="EmptyContentTemplate" Value="{StaticResource DefaultMessageTemplate}" />
+
         <Setter Property="ItemContainerTransitions">
             <Setter.Value>
                 <TransitionCollection>
-                    <AddDeleteThemeTransition/>
-                    <ReorderThemeTransition/>
+                    <AddDeleteThemeTransition />
+                    <ContentThemeTransition />
+                    <ReorderThemeTransition />
+                    <EntranceThemeTransition IsStaggeringEnabled="False" />
                 </TransitionCollection>
             </Setter.Value>
         </Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal"/>
+                    <ItemsStackPanel Orientation="Vertical" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="GridView">
-
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                <ControlTemplate TargetType="controls:VerticalGridView">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="LoadMoreVisualStates">
                                 <VisualState x:Name="NoLoadMore">
@@ -51,35 +69,54 @@
                                 <VisualState x:Name="LoadMoreProgress">
                                     <Storyboard>
                                         <FadeInThemeAnimation TargetName="LoadMoreProgressContent" />
-                                      
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <ScrollViewer x:Name="ScrollViewer" AutomationProperties.AccessibilityView="Raw" BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}" IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" TabNavigation="{TemplateBinding TabNavigation}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                        <Grid>
 
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid x:Name="MessageGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock  TextWrapping="Wrap" FontSize="20" Text="{Binding EmptyContent, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                                </Grid>
-                                <ItemsPresenter Grid.Row="0" FooterTransitions="{TemplateBinding FooterTransitions}" FooterTemplate="{TemplateBinding FooterTemplate}" Footer="{TemplateBinding Footer}" HeaderTemplate="{TemplateBinding HeaderTemplate}" Header="{TemplateBinding Header}" HeaderTransitions="{TemplateBinding HeaderTransitions}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ScrollViewer x:Name="ScrollViewer"
+        						TabNavigation="{TemplateBinding TabNavigation}"
+        						HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+        						HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+        						IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
+        						VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+        						VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+        						IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}"
+        						IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+        						IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+        						ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
+        						IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+        						BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+        						AutomationProperties.AccessibilityView="Raw">
 
-                                <Grid x:Name="LoadMoreGrid" Margin="8" Grid.Row="1" >
-                                    <Grid  VerticalAlignment="Bottom">
-                                        <ProgressBar x:Name="LoadMoreProgressContent" Margin="8" Height="10" IsIndeterminate="True"  HorizontalAlignment="Stretch"
-        										VerticalAlignment="Center"/>
-                                    </Grid>
-                                </Grid>
+                                <ItemsPresenter
+        								Header="{TemplateBinding Header}" 
+        								HeaderTemplate="{TemplateBinding HeaderTemplate}"
+        								HeaderTransitions="{TemplateBinding HeaderTransitions}"
+        								Footer="{TemplateBinding Footer}" 
+        								FooterTemplate="{TemplateBinding FooterTemplate}"
+        								FooterTransitions="{TemplateBinding FooterTransitions}"
+        								Padding="{TemplateBinding Padding}"  />
+
+                            </ScrollViewer>
+
+                            <ContentPresenter Content="{Binding EmptyContent, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                  ContentTemplate="{Binding EmptyContentTemplate, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                  VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding  EmptyContent, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibleNotEmptyConverter}}" 
+                                                 />
+
+                            <Grid x:Name="LoadMoreGrid"  VerticalAlignment="Bottom" >
+                                <ProgressBar x:Name="LoadMoreProgressContent" Margin="8" Height="10" IsIndeterminate="True"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                             </Grid>
-                        </ScrollViewer>
+
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+
 
 </ResourceDictionary>

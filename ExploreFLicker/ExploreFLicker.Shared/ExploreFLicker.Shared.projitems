@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanNegateConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ItemClickedConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\PathToGeometryConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleNotEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibleWhenEmptyConverter.cs" />
