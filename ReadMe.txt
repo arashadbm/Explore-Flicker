@@ -1,3 +1,6 @@
+
+Note: In windows solution, Run under configuration x86 not AnyCPU as there are native libararies like Bing.Maps.
+
 Extensions:
 
 1-Bing Maps sdk: Install Bing.Maps.vsix v 1.313.825.0, You will find it inside Extensions\Bing.Maps folder.
