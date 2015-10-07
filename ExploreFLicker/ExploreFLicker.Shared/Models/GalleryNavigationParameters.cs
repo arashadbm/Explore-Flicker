@@ -7,7 +7,7 @@ namespace ExploreFlicker.Models
 {
     public class GalleryNavigationParameters
     {
-        public Photo SelectedPhoto { get; set; }
+        public int Index { get; set; }
         public List<Photo> Photos { get; set; }
     }
 }

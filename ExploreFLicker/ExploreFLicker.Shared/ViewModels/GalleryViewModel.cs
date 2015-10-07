@@ -4,6 +4,7 @@ using ExploreFlicker.Common;
 using ExploreFlicker.Helpers;
 using ExploreFlicker.Models.Response;
 using ExploreFlicker.Views;
+using Newtonsoft.Json;
 
 namespace ExploreFlicker.ViewModels
 {
@@ -85,7 +86,9 @@ namespace ExploreFlicker.ViewModels
         {
             if (photo == null) return;
             //Navigation to Map
-            _navigationService.NavigateByPage<MapView>(photo);
+            //The purpose of serialzing here is to pass simple type that navigation state can recover after suspension
+            //otherwise we could use pass them as strongly typed
+            _navigationService.NavigateByPage<MapView>(JsonConvert.SerializeObject(photo));
         }
 
         #endregion

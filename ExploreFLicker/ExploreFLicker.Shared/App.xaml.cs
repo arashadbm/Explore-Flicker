@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ExploreFlicker.Common;
+using ExploreFlicker.Models;
 using ExploreFlicker.Models.Response;
 using ExploreFlicker.Viewmodels;
 using ExploreFlicker.Views;
@@ -67,11 +68,7 @@ namespace ExploreFlicker
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
-
-                //Add types passed inside navigation parameters here
-                SuspensionManager.KnownTypes.Add(typeof(Photo));
-                SuspensionManager.KnownTypes.Add(typeof(Description));
+                rootFrame = new Frame();              
 
                 //Associate the frame with a SuspensionManager key                                
                 SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
@@ -156,6 +153,7 @@ namespace ExploreFlicker
             }
             catch (Exception)
             {
+                // ignored
             }
 
             deferral.Complete();

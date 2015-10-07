@@ -11,6 +11,7 @@ using ExploreFlicker.Common;
 using ExploreFlicker.Controls;
 using ExploreFlicker.Models.Response;
 using ExploreFlicker.ViewModels;
+using Newtonsoft.Json;
 
 
 namespace ExploreFlicker.Views
@@ -29,7 +30,9 @@ namespace ExploreFlicker.Views
         protected override async void LoadState(object sender, LoadStateEventArgs e)
         {
             base.LoadState(sender, e);
-            var photo = e.NavigationParameter as Photo;
+            string json= e.NavigationParameter as string;
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var photo = JsonConvert.DeserializeObject<Photo>(json);
             if (photo == null) return;
             _mapViewModel.Photo = photo;
 

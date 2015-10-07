@@ -47,6 +47,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\INavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\INetworkHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IToastService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\JsonHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NetworkHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ToastService.cs" />

@@ -15,6 +15,7 @@ using ExploreFlicker.Views;
 using ExploreFlickr.Strings;
 using FlickrExplorer.DataServices.Interfaces;
 using FlickrExplorer.DataServices.Requests;
+using Newtonsoft.Json;
 
 namespace ExploreFLicker.ViewModels
 {
@@ -239,10 +240,12 @@ namespace ExploreFLicker.ViewModels
             if (photo == null) return;
             var galleryParameters = new GalleryNavigationParameters()
             {
-                SelectedPhoto = photo,
+                Index = SearchCollection.IndexOf(photo),
                 Photos = SearchCollection.ToList()
             };
-            _navigationService.NavigateByPage<GalleryView>(galleryParameters);
+            //The purpose of serialzing here is to pass simple type that navigation state can recover after suspension
+            //otherwise we could use pass them as strongly typed
+            _navigationService.NavigateByPage<GalleryView>(JsonConvert.SerializeObject(galleryParameters));
         }
         #endregion
     }

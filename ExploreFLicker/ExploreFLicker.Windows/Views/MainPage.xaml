@@ -17,62 +17,12 @@
 
 
     <Page.Resources>
-
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
             <converters:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
-
-            <!--Square Image Thumbnail Template-->
-            <DataTemplate x:Key="ThumbnailTemplate">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="0"  Source="{Binding ThumbnailPath}" Stretch="UniformToFill"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Title}" 
-                                   MaxLines="1" TextWrapping="NoWrap" TextAlignment="Center" 
-                                   Margin="8,8,8,0"
-                                   VerticalAlignment="Bottom"
-                                   FontSize="18"/>
-                </Grid>
-            </DataTemplate>
-
-            <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
-                <!--ItemsWrapGrid supports virtualization,
-            Don't used WrapGrid or VariableSizedWrapGrid they don't have virtualization-->
-                <ItemsWrapGrid ItemWidth="300" ItemHeight="300" Orientation="Vertical"  />
-            </ItemsPanelTemplate>
-
-        <Style x:Key="ItemContainerStyle" TargetType="GridViewItem">
-            <Setter Property="Margin" Value="0,0,24,24"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
-                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" 
-                                               ContentMargin="0" ContentTransitions="{TemplateBinding ContentTransitions}" 
-                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
-                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
-                                               Padding="{TemplateBinding Padding}"
-                                               PointerOverBackgroundMargin="1" 
-                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
-                                               SelectionCheckMarkVisualEnabled="False" 
-                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
-                                               SelectedForeground="White"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        </ResourceDictionary>
     </Page.Resources>
 
 
@@ -105,7 +55,7 @@
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>-->
             <Button MinWidth="0"  Width="0" Height="0"/>
-            
+
             <SearchBox x:Name="SearchBox"
                        Grid.Column="1" HorizontalAlignment="Right" 
                        QuerySubmitted="SearchBox_QuerySubmitted" 
@@ -114,16 +64,16 @@
                        FontSize="18.667"
                        
                         />
-            
+
             <TextBlock x:Name="PageTitle" x:Uid="MainPageTitleTb" Text="Flickr Explorer" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
-            
+
             <ProgressBar Height="10" VerticalAlignment="Bottom" 
                          Margin="0,0,0,15" IsIndeterminate="True"
                          Visibility="{Binding IsBusy, Converter={StaticResource VisibleWhenTrueConverter}}" 
                          Grid.ColumnSpan="2" Grid.Column="0" />
 
-           
+
 
         </Grid>
 

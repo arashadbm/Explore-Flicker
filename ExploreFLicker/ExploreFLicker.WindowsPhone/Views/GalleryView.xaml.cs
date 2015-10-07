@@ -16,6 +16,7 @@ using ExploreFlicker.Common;
 using ExploreFlicker.Controls;
 using ExploreFlicker.Models;
 using ExploreFlicker.ViewModels;
+using Newtonsoft.Json;
 
 
 namespace ExploreFlicker.Views
@@ -42,11 +43,12 @@ namespace ExploreFlicker.Views
                 _galleryViewModel.Photos = null;
                 _galleryViewModel.SelectedPhoto = null;
 
-                var parameters = e.NavigationParameter as GalleryNavigationParameters;
-                if (parameters == null) return;
+                var json = e.NavigationParameter as string;
+                if (String.IsNullOrEmpty(json)) return;
+                var parameters = JsonConvert.DeserializeObject<GalleryNavigationParameters>(json);
                 //Set photos gallery and selected photo.
                 _galleryViewModel.Photos = parameters.Photos;
-                _galleryViewModel.SelectedPhoto = parameters.SelectedPhoto;
+                _galleryViewModel.SelectedPhoto = parameters.Photos[parameters.Index];
 
             }
         }
