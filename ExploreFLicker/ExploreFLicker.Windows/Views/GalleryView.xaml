@@ -17,6 +17,7 @@
 
     <Page.Resources>
         <converters:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
+        <converters:VisibleNotEmptyConverter x:Key="VisibleNotEmptyConverter" />
 
 
     </Page.Resources>
@@ -59,9 +60,15 @@
 
         </Grid>
 
-        <FlipView Grid.Row="1" x:Name="GalleryPivot" 
+        <FlipView Grid.Row="1" x:Name="GalleryFlip" 
                ItemsSource="{Binding Photos}" 
                SelectedItem="{Binding SelectedPhoto,Mode=TwoWay}">
+            <FlipView.ItemContainerStyle>
+                <Style TargetType="FlipViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </FlipView.ItemContainerStyle>
             <FlipView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -69,12 +76,16 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="0" Grid.RowSpan="2" Source="{Binding MediumPath}" Stretch="Uniform"/>
-                        <Grid Grid.Row="1" Background="Cyan">
+                        <Image x:Name="Image" Grid.Row="0" Grid.RowSpan="2" Source="{Binding MediumPath}" Stretch="Uniform"/>
+
+                        <Grid  HorizontalAlignment="Stretch" Grid.Row="1" Background="#B5808B8B" >
                             <TextBlock FontSize="26"
-                               Margin="0,0,0,22"
+                               Margin="22"
+                               MaxLines="3"
+                               HorizontalAlignment="Center"
                                Text="{Binding Title}"
-                               TextWrapping="NoWrap" MaxWidth="150" MinWidth="40" TextTrimming="None"/>
+                               Visibility="{Binding Title,Converter={StaticResource VisibleNotEmptyConverter}}"
+                               TextWrapping="Wrap" TextTrimming="None"/>
                         </Grid>
                     </Grid>
                 </DataTemplate>

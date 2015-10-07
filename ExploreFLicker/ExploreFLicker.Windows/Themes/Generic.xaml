@@ -92,8 +92,8 @@
         								FooterTransitions="{TemplateBinding FooterTransitions}"
         								Padding="{TemplateBinding Padding}"  />
 
-                                    <Grid Grid.Column="1" x:Name="LoadMoreGrid"  VerticalAlignment="Bottom" >
-                                        <ProgressRing Margin="20" x:Name="LoadMoreProgressContent" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50"/>
+                                    <Grid Grid.Column="1" x:Name="LoadMoreGrid"  VerticalAlignment="Center" >
+                                        <ProgressRing Margin="20" x:Name="LoadMoreProgressContent" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="True"/>
                                     </Grid>
                                 </Grid>
                             </ScrollViewer>

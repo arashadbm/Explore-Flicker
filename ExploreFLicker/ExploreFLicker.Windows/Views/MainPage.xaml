@@ -37,7 +37,7 @@
         <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
             <!--ItemsWrapGrid supports virtualization,
             Don't used WrapGrid or VariableSizedWrapGrid they don't have virtualization-->
-            <ItemsWrapGrid ItemWidth="250" ItemHeight="250" Orientation="Vertical"  />
+            <ItemsWrapGrid ItemWidth="300" ItemHeight="300" Orientation="Vertical"  />
         </ItemsPanelTemplate>
 
         <Style x:Key="ItemContainerStyle" TargetType="GridViewItem">
@@ -117,7 +117,8 @@
 				AutomationProperties.AutomationId="ThumbnailsGridView"
 				AutomationProperties.Name="Flickr Images" 
 				TabIndex="1"
-                Grid.Row="1" 
+                Grid.Row="0"
+                Grid.RowSpan="2"
                 ItemsSource="{Binding PhotosCollection}"
                 ItemTemplate="{StaticResource ThumbnailTemplate}"
                 Padding="116,136,116,46"

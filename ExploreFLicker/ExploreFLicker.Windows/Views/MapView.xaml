@@ -50,7 +50,7 @@
         </Grid>
 
         <Grid Grid.Row="1" x:Name="ContentGrid">
-            <maps:Map  x:Name="Map"   >
+            <maps:Map  x:Name="Map" Credentials="Z6AzWEVBBCAM4X0ASWol~1x7dtZBUQSWL5eJFA1nqLw~AuWc9CsQk5qAXQ73Dm1l-EH-vsZR8VHi3RmtcRSWyd-Nmhq18AhoLDYibaDOLvMO"  >
             </maps:Map>
 
         </Grid>

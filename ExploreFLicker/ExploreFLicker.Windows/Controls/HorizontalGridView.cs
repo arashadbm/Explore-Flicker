@@ -17,7 +17,7 @@ namespace ExploreFlicker.Controls
         /// A value of zero will make user aware that he reached end before loading again.
         /// Other values implement infinite scrolling.
         /// </summary>
-        private const int OffsetToFire = 1000;
+        private const int OffsetToFire = 1200;
 
         //Not Used
         /// <summary>

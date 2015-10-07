@@ -4,7 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ExploreFlicker"
     xmlns:viewmodels="using:ExploreFlicker.Viewmodels"
-    xmlns:converters="using:ExploreFlicker.Converters">
+    xmlns:converters="using:ExploreFlicker.Converters"
+    
+    >
     <Application.Resources>
         <viewmodels:ViewModelLocator x:Key="Locator"/>
         <converters:ItemClickedConverter x:Key="ItemClickedConverter"/>

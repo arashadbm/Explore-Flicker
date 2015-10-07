@@ -3,6 +3,7 @@ using Bing.Maps;
 using ExploreFlicker.Common;
 using ExploreFlicker.Controls;
 using ExploreFlicker.Models.Response;
+using ExploreFlicker.Viewmodels;
 using ExploreFlicker.ViewModels;
 
 
@@ -28,7 +29,7 @@ namespace ExploreFlicker.Views
             //add pushpin
             Pushpin bin = new Pushpin()
             {
-                Text = string.IsNullOrWhiteSpace(photo.Title) ? "Photo" : photo.Title
+                Text = string.IsNullOrWhiteSpace(photo.Title) ? ViewModelLocator.Resources.Photo : photo.Title
             };
             MapLayer.SetPosition(bin, _mapViewModel.Location);
             Map.Children.Add(bin);

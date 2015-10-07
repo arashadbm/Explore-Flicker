@@ -123,11 +123,20 @@
   <data name="ErrorConnecting" xml:space="preserve">
     <value>Error Happened while connecting, try again later.</value>
   </data>
+  <data name="GalleryTitleTb.Text" xml:space="preserve">
+    <value>Gallery</value>
+  </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading</value>
   </data>
+  <data name="MainPageTitleTb.Text" xml:space="preserve">
+    <value>Flickr Explorer</value>
+  </data>
   <data name="MapBarButton.Label" xml:space="preserve">
     <value>Map</value>
+  </data>
+  <data name="MapTitleTb.Text" xml:space="preserve">
+    <value>Photo Location</value>
   </data>
   <data name="NoData" xml:space="preserve">
     <value>There is no available data at the moment.</value>
@@ -135,8 +144,14 @@
   <data name="NoInternet" xml:space="preserve">
     <value>No Internet</value>
   </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
   <data name="SearchBarButton.Label" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SearchResultsTitleTb.Text" xml:space="preserve">
+    <value>Search Results</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>Sucess</value>

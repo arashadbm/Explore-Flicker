@@ -37,7 +37,7 @@
         <ItemsPanelTemplate x:Key="GalleryItemsPanelTemplate">
             <!--ItemsWrapGrid supports virtualization,
             Don't used WrapGrid or VariableSizedWrapGrid they don't have virtualization-->
-            <ItemsWrapGrid ItemWidth="250" ItemHeight="250" Orientation="Vertical"  />
+            <ItemsWrapGrid ItemWidth="300" ItemHeight="300" Orientation="Vertical"  />
         </ItemsPanelTemplate>
 
         <Style x:Key="ItemContainerStyle" TargetType="GridViewItem">
@@ -102,7 +102,7 @@
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-            <TextBlock x:Name="PageTitle" x:Uid="MainPageTitleTb" Text="Search Results" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+            <TextBlock x:Name="PageTitle" x:Uid="SearchResultsTitleTb" Text="Search Results" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
             <ProgressBar Height="10" VerticalAlignment="Bottom" 
                          Margin="0,0,0,15" IsIndeterminate="True"

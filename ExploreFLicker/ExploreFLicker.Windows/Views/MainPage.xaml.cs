@@ -88,6 +88,12 @@ namespace ExploreFlicker.Views
 
         #endregion
 
+        /// <summary>
+        /// When user selected previous search or enter new term and press enter, this event will fire.
+        /// It will redirect to search results page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void SearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             if (string.IsNullOrWhiteSpace(args.QueryText)) return;

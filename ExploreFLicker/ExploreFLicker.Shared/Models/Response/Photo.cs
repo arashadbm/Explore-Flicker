@@ -66,14 +66,32 @@ namespace ExploreFlicker.Models.Response
 
         //Constructed Properties which isn't returned by backend
 
-        public string ThumbnailPath
+
+#if WINDOWS_PHONE_APP
+            //q	large square 150x150
+              public string ThumbnailPath
         {
             get { return string.Format("https://farm{0}.staticflickr.com/{1}/{2}_{3}_q.jpg", Farm, Server, Id, Secret); }
+}
+            //z	medium 640, 640 on longest side
+         public string MediumPath
+    {
+        get { return string.Format("https://farm{0}.staticflickr.com/{1}/{2}_{3}_z.jpg", Farm, Server, Id, Secret); }
+    }
+#else
+        //Larger resolution for windows version
+        // n small, 320 on longest side
+        public string ThumbnailPath
+        {
+            get { return string.Format("https://farm{0}.staticflickr.com/{1}/{2}_{3}_n.jpg", Farm, Server, Id, Secret); }
         }
-
+        //b	large, 1024 on longest side*
         public string MediumPath
         {
-            get { return string.Format("https://farm{0}.staticflickr.com/{1}/{2}_{3}_z.jpg", Farm, Server, Id, Secret); }
+            get { return string.Format("https://farm{0}.staticflickr.com/{1}/{2}_{3}_b.jpg", Farm, Server, Id, Secret); }
         }
+#endif
+
+
     }
 }
