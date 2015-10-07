@@ -76,7 +76,14 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Image x:Name="Image" Grid.Row="0" Grid.RowSpan="2" Source="{Binding MediumPath}" Stretch="Uniform"/>
+                        <controls:ImageLoader x:Name="Image" 
+                                              Grid.Row="0" Grid.RowSpan="2"
+                                              UriSource="{Binding MediumPath}"
+                                              Stretch="Uniform"                                              
+                                              />
+
+                        <ProgressRing Grid.Row="0" Grid.RowSpan="2" Margin="20"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding IsImageLoading,ElementName=Image}"/>
+
 
                         <Grid  HorizontalAlignment="Stretch" Grid.Row="1" Background="#B5808B8B" >
                             <TextBlock FontSize="26"

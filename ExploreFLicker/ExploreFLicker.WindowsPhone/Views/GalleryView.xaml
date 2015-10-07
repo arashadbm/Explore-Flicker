@@ -31,7 +31,12 @@
             <Pivot.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Image Source="{Binding MediumPath}" Stretch="Uniform"/>
+                        <controls:ImageLoader x:Name="Image"                                               
+                                              UriSource="{Binding MediumPath}"
+                                              Stretch="Uniform"                                              
+                                              />
+                        <ProgressRing  Margin="20"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding IsImageLoading,ElementName=Image}"/>
+
                     </Grid>
                 </DataTemplate>
             </Pivot.ItemTemplate>

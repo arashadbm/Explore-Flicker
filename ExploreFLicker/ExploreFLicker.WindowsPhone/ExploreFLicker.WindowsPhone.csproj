@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\EmptyContentMode.cs" />
+    <Compile Include="Controls\ImageLoader.cs" />
     <Compile Include="Controls\SearchTextBox.cs" />
     <Compile Include="Controls\VerticalGridView.cs" />
     <Compile Include="Views\GalleryView.xaml.cs">
